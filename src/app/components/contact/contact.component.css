@@ -1,0 +1,27 @@
+.address_area {
+  background: #cb3d39;
+  padding: 32px 0px;
+}
+
+.address_inner .media .media-left {
+  padding-right: 25px;
+}
+
+.address_inner .media .media-body {
+  vertical-align: middle;
+}
+
+.address_inner .media .media-body h4 {
+  font-size: 22px;
+  font-family: "Lato", sans-serif;
+  font-weight: 500;
+  color: #e2e2e2;
+}
+
+.address_inner .media .media-body h5 {
+  font-size: 18px;
+  font-family: "Lato", sans-serif;
+  font-weight: 500;
+  color: #e2e2e2;
+  padding-top: 7px;
+}

@@ -1,0 +1,38 @@
+<section class="address_area" id="contact" *ngIf="settings">
+  <div class="container">
+    <div class="row address_inner">
+      <div class="col-md-4">
+        <div class="media">
+          <div class="media-left">
+            <img src="../../../assets/images/icon/place-icon.png" alt="">
+          </div>
+          <div class="media-body">
+            <h4>Office Address :</h4>
+            <h5>{{settings.address}}</h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="media">
+          <div class="media-left">
+            <img src="../../../assets/images/icon/phone-icon.png" alt="">
+          </div>
+          <div class="media-body">
+            <h5>Phone: {{settings.phone}}</h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="media">
+          <div class="media-left">
+            <img src="../../../assets/images/icon/inbox-icon.png" alt="">
+          </div>
+          <div class="media-body">
+            <h4>Email :</h4>
+            <h5>info@sspeng.com</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
