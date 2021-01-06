@@ -1,0 +1,59 @@
+.bgimg-1, .bgimg-2, .bgimg-3, .bgimg-4 {
+  position: relative;
+  opacity: 0.65;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+.bgimg-1 {
+  background-image: url("../../../assets/images/parallex2.jpg");
+  min-height: 100%;
+}
+
+.bgimg-2 {
+  background-image: url("../../../assets/images/parallex2.jpg");
+  min-height: 400px;
+}
+
+.bgimg-3 {
+  background-image: url("../../../assets/images/parallex3.jpg");
+  min-height: 400px;
+}
+
+.bgimg-4 {
+  background-image: url("../../../assets/images/parallex5.jpg");
+  min-height: 400px;
+}
+
+.caption {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  text-align: center;
+  color: #000;
+}
+
+.caption span.border {
+  color: #fff;
+  padding: 18px;
+  font-size: 50px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+h3 {
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  font: 20px "Lato", sans-serif;
+  color: #111;
+}
+
+/* Turn off parallax scrolling for tablets and phones */
+@media only screen and (max-device-width: 1024px) {
+  .bgimg-1, .bgimg-2, .bgimg-3, .bgimg-4 {
+    background-attachment: scroll;
+  }
+}
