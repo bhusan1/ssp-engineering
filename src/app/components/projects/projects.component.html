@@ -1,0 +1,29 @@
+<section class="our_projects_area" id="projects">
+  <div class="container">
+    <div class="main_c_b_title">
+      <h2 *ngIf="!title">Our <br class="title_br" />Projects</h2>
+      <h2 *ngIf="title"><br class="title_br" />{{ title }}</h2>
+      <a href="/projects" *ngIf="!title">
+        <h6>See All</h6>
+      </a>
+    </div>
+    <div class="row our_projects_inner">
+      <div class="col-md-4 col-sm-6" *ngFor="let listings of projectListings">
+        <div class="our_projects_item">
+          <div class="news_image">
+            <img src="{{ listings.imageSrc }}" alt="" />
+          </div>
+          <div class="news_content">
+            <a href="/projects/{{ listings.projectId }}">
+              <h4>{{ listings.title }}</h4>
+            </a>
+            <!-- <p>{{ listings.description }}</p> -->
+            <!-- <div class="pull-right">
+              <a href="/projects/{{ listings.projectId }}">Read More <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
