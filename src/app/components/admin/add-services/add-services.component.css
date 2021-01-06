@@ -1,0 +1,31 @@
+/* .mat-card {
+  height: 800px;
+} */
+.add-services-form {
+  min-height: 600px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.add-services-button {
+  width: 150px;
+}
+
+.alert {
+  color: red;
+}
+
+#resetformButton {
+  margin-left: 20px;
+}
+.add-services-details {
+  float: left;
+  width: 100%;
+}
+
+.mat-grid-tile {
+  padding-top: 20px;
+  padding-bottom: 20px !important;
+}

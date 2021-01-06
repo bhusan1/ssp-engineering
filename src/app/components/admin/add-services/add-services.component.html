@@ -1,0 +1,62 @@
+<mat-card class="add-services">
+  <mat-grid-list cols="2" row="1">
+    <mat-grid-tile class="mat-grid-tile">
+      <app-upload-file (projectImageUploaded)="setImageUrl($event)"></app-upload-file>
+    </mat-grid-tile>
+    <mat-grid-tile class="mat-grid-tile">
+      <mat-card class="add-services-details">
+        <form class="add-services-form" [formGroup]="addServicesForm" autocomplete="off" (ngSubmit)="onSubmit()"
+          novalidate>
+          <mat-list>
+            <mat-list-item>
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Services Title*" formControlName="title" type="text" name="title" />
+                <mat-hint class="alert">
+                  <app-form-validator [control]="addServicesForm.controls.title"></app-form-validator>
+                </mat-hint>
+              </mat-form-field>
+            </mat-list-item>
+            <mat-list-item></mat-list-item>
+            <mat-list-item>
+              <mat-form-field>
+                <mat-select matSelect placeholder="Category *" formControlName="serviceCategory" name="serviceCategory"
+                  id="importPrserviceCategoryocess" class="full-width floatLeft">
+                  <mat-option *ngFor="let options of serviceCategoryOptions" [value]="options.value">
+                    {{options.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </mat-list-item>
+            <mat-list-item></mat-list-item>
+            <mat-list-item>
+              <mat-form-field class="full-width">
+                <textarea matInput placeholder="Services Description* (Please separate by comma)"
+                  formControlName="description" type="text" name="description"></textarea>
+                <mat-hint class="alert">
+                  <app-form-validator [control]="addServicesForm.controls.description"></app-form-validator>
+                </mat-hint>
+              </mat-form-field>
+            </mat-list-item>
+            <mat-list-item></mat-list-item>
+            <mat-list-item>
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Services Image URL*" formControlName="imageSrc" type="text"
+                  name="imageSrc" />
+                <mat-hint class="alert">
+                  <app-form-validator [control]="addServicesForm.controls.imageSrc"></app-form-validator>
+                </mat-hint>
+              </mat-form-field>
+            </mat-list-item>
+            <mat-list-item></mat-list-item>
+            <mat-list-item>
+              <button mat-raised-button color="primary" mat-raised-button type="submit"
+                [disabled]="addServicesForm.invalid" class="add-services-button">Add Services</button>
+              <button mat-raised-button type="button" id="resetformButton"
+                *ngIf="addServicesForm.touched || addServicesForm.dirty" (click)="resetForm()">Reset</button>
+            </mat-list-item>
+          </mat-list>
+        </form>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</mat-card>
