@@ -1,0 +1,26 @@
+.counter_area {
+  background: #31353d;
+  padding: 100px 0px;
+}
+
+.counter_item {
+  text-align: center;
+  color: #e8e8e8;
+}
+
+.counter_item i {
+  font-size: 40px;
+}
+
+.counter_item h4 {
+  font-size: 35px;
+  font-family:"Lato", sans-serif;
+  font-weight: 600;
+  padding: 13px 0px 10px 0px;
+}
+
+.counter_item h5 {
+  font-size: 16px;
+  font-family:"Lato", sans-serif;
+  text-transform: uppercase;
+}

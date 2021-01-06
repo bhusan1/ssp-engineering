@@ -1,0 +1,30 @@
+<section class="counter_area" *ngIf="settings">
+  <div class="container">
+    <div class="row counter_inner">
+      <div class="col-md-4 col-sm-6">
+        <div class="counter_item">
+          <i class="fa fa-users" aria-hidden="true"></i>
+          <h5>Licensed Professionals Engineers(P.E) In</h5>
+          <h4 class="counter">{{settings.states}}</h4>
+          <h5>States</h5>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6">
+        <div class="counter_item">
+          <i class="fa fa-industry" aria-hidden="true"></i>
+          <h5>More Than</h5>
+          <h4 class="counter">{{settings.experience}}</h4>
+          <h5>Years of Experience In Consulting</h5>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6">
+        <div class="counter_item">
+          <i class="fa fa-registered" aria-hidden="true"></i>
+          <h5>Registered Company In</h5>
+          <h4 class="counter">{{settings.registered}}</h4>
+          <h5>States</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
