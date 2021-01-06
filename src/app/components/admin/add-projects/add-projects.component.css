@@ -1,0 +1,31 @@
+.add-project-form {
+}
+
+.full-width {
+  width: 100%;
+}
+
+.add-project-button {
+  width: 150px;
+}
+
+.alert {
+  color: red;
+}
+
+#resetformButton {
+  margin-left: 20px;
+}
+.add-project-details {
+  float: left;
+  width: 100%;
+}
+
+.mat-grid-tile {
+  padding-top: calc(((20% - 0.5px) * 1) + 20px) !important;
+  padding-bottom: 20px !important;
+}
+.mat-grid-list {
+  padding-bottom: calc(((1 * ((25% - 0.5px) * 1)) + 0px) + 0px) !important;
+}
+
