@@ -1,0 +1,19 @@
+.footer_copy_right {
+  text-align: center;
+  background: #262a31;
+  padding: 41px 0px;
+}
+
+.footer_copy_right h4 {
+  color: #e8e8e8;
+  font-size: 18px;
+  font-family:"Lato", sans-serif;
+}
+
+.footer_copy_right h4 i {
+  color: #cb3d39;
+}
+
+.footer_copy_right h4 a {
+  color: #e8e8e8;
+}
