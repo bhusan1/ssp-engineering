@@ -1,0 +1,24 @@
+.who_we_are_area {
+  padding: 100px 0 100px 0;
+}
+
+.who_we_are_area .main_w_title {
+  padding-bottom: 30px;
+}
+
+.who_we_inner .who_we_left_content p {
+  font-size: 15px;
+  line-height: 26px;
+  color: #444444;
+  padding-bottom: 30px;
+}
+
+.who_we_inner .who_we_left_content .border_bar {
+  height: 1px;
+  background: #cb3d39;
+  width: 100%;
+  margin-top: 10px;
+}
+.who_we_image img {
+  max-width: 660px;
+}
