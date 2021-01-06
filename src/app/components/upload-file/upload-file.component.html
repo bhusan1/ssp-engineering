@@ -1,0 +1,24 @@
+<mat-card class="full-width">
+  <form (ngSubmit)="uploadFile()" novalidate>
+    <mat-list>
+      <mat-list-item>
+        <div class="full-width">
+          <input type="file" name="file" id="file" (change)="getFile($event)" />
+        </div>
+      </mat-list-item>
+      <mat-list-item></mat-list-item>
+      <mat-list-item>
+        <button mat-raised-button [disabled]="disableSubmit" type="submit">Upload</button>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-progress-bar class="example-margin" [color]="primary" [mode]="determinate" [value]="percentUploaded" [bufferValue]="bufferValue" *ngIf="showProgressBar"> </mat-progress-bar><span class="center small-text" *ngIf="showProgressBar">{{ percentUploaded }}%</span>
+      </mat-list-item>
+      <mat-list-item *ngIf="uploadUrl" id="uploadUrl">
+        <div class="full-width small-text">
+          <h4>URL</h4>
+          <a href="{{ uploadUrl }}" target="_blank">{{ uploadUrl }}</a>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </form>
+</mat-card>
