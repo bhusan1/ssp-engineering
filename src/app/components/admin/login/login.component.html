@@ -1,0 +1,32 @@
+<mat-card class="medium-card center top-margin">
+  <form [formGroup]="loginForm" autocomplete="off" (ngSubmit)="onSubmit()" novalidate>
+    <mat-list>
+      <mat-list-item>
+        <img src="../../../../assets/images/SmallLogo.png">
+      </mat-list-item>
+      <mat-list-item></mat-list-item>
+      <mat-list-item>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Email *" formControlName="username" type="email" name="email" id="email">
+          <mat-hint class="alert" id="emailError">
+            <app-form-validator [control]="loginForm.controls.username"></app-form-validator>
+          </mat-hint>
+        </mat-form-field>
+      </mat-list-item>
+      <mat-list-item></mat-list-item>
+      <mat-list-item>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Password *" formControlName="password" type="password" name="password"
+            id="password">
+          <mat-hint class="alert" id="passwordError">
+            <app-form-validator [control]="loginForm.controls.password"></app-form-validator>
+          </mat-hint>
+        </mat-form-field>
+      </mat-list-item>
+      <mat-list-item></mat-list-item>
+      <mat-list-item>
+        <button mat-raised-button type="submit" id="login" [disabled]="loginForm.invalid">Login</button>
+      </mat-list-item>
+    </mat-list>
+  </form>
+</mat-card>
