@@ -1,0 +1,53 @@
+<hello name="{{ name }}"></hello>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th style="text-align: center;">Project</th>
+      <th style="text-align: center;">Date: Jan 4- Jan 8</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor = "let applicant of timeEntryList ">
+      <td style="text-align: center;">{{applicant.projectName}}</td>
+      <td>
+        <table>
+          <th style="text-align: center;" *ngFor="let timeMarks of applicant.timeDistributionList">
+            {{timeMarks.dayTitle}}
+          </th>
+          <tbody>
+            <tr>
+              <td *ngFor="let timeMarks of applicant.timeDistributionList">
+                <input type="text" [(ngModel)]="timeMarks.Hours"/>
+                <!-- <input type="text" /> -->
+                <mat-form-field class="example-full-width">
+                  <mat-label>Leave a comment</mat-label>
+                  <textarea matInput placeholder="Ex. What you did on this project"></textarea>
+                </mat-form-field>
+              </td>
+                <span style="text-align: center; font-weight: bold;">Total Hours :{{getTotal(applicant.timeDistributionList) }}</span>
+            </tr>
+            <tr>
+              
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+
+
+</table>
+
+<div class="example-button-row">
+  <button mat-raised-button>Save</button>
+</div>
+
+<div class="example-button-row">
+  <button mat-raised-button>Submit</button>
+</div>
+
+<div class="example-button-row">
+  <button mat-raised-button>Clear</button>
+</div>
