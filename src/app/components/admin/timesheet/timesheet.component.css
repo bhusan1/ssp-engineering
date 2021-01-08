@@ -3,7 +3,8 @@ p {
   }
   
   table {
-    width: 100%;
+    overflow: auto;
+    width: 80%;
   }
   
   .example-container {
@@ -55,7 +56,8 @@ p {
   }
   
   .mat-column-TotalHours{
-    border-right: 1px solid grey;
+      /* border-left:1px solid grey;  */
+    /* border-right: 1px solid grey; */
     text-align: center;
     align-self: stretch;
   }

@@ -61,6 +61,14 @@ export class TimesheetComponent {
           dayTitle:"Friday",
           Hours: null
         },
+        {
+          dayTitle:"Saturday",
+          Hours: null
+        },
+        {
+         dayTitle:"Sunday",
+         Hours: null
+         },
       ]
 
     },
@@ -87,6 +95,14 @@ export class TimesheetComponent {
           dayTitle:"Friday",
           Hours: null
         },
+        {
+            dayTitle:"Saturday",
+            Hours: null
+          },
+          {
+           dayTitle:"Sunday",
+           Hours: null
+           },
       ]
 
     },
@@ -113,32 +129,27 @@ export class TimesheetComponent {
           dayTitle:"Friday",
           Hours: null
         },
+        {
+            dayTitle:"Saturday",
+            Hours: null
+          },
+          {
+           dayTitle:"Sunday",
+           Hours: null
+           },
       ]
 
     },
     {
       projectName: "GULEI Stack Extension",
       timeDistributionList:[
-        {
-          dayTitle:"Monday",
-          Hours: null
-        },
-        {
-          dayTitle:"Tuesday",
-          Hours: null
-        },
-        {
-          dayTitle:"Wednesday",
-          Hours: null
-        },
-        {
-          dayTitle:"Thrusday",
-          Hours: null
-        },
-        {
-          dayTitle:"Friday",
-          Hours: null
-        },
+        {dayTitle:"Monday",Hours: null},
+        {dayTitle:"Tuesday",Hours: null},
+        {dayTitle:"Wednesday",Hours: null},
+        {dayTitle:"Thrusday", Hours: null},
+        {dayTitle:"Friday", Hours: null},
+        {dayTitle:"Saturday", Hours: null},
+        {dayTitle:"Sunday", Hours: null},
       ]
 
     },
@@ -165,6 +176,14 @@ export class TimesheetComponent {
           dayTitle:"Friday",
           Hours: null
         },
+        {
+            dayTitle:"Saturday",
+            Hours: null
+          },
+          {
+           dayTitle:"Sunday",
+           Hours: null
+           },
       ]
 
     },
@@ -191,6 +210,14 @@ export class TimesheetComponent {
           dayTitle:"Friday",
           Hours: null
         },
+        {
+            dayTitle:"Saturday",
+            Hours: null
+          },
+          {
+           dayTitle:"Sunday",
+           Hours: null
+           },
       ]
 
     }
