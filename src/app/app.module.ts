@@ -40,7 +40,6 @@ import { IndustrialComponent } from './components/industrial/industrial.componen
 import { MunicipalComponent } from './components/municipal/municipal.component';
 import { CommercialComponent } from './components/commercial/commercial.component';
 import { TimesheetComponent } from './components/admin/timesheet/timesheet.component';
-import { HelloComponent } from './components/admin/timesheet/hello.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +73,7 @@ import { HelloComponent } from './components/admin/timesheet/hello.component';
     MunicipalComponent,
     CommercialComponent,
     TimesheetComponent,
-    HelloComponent
+    
   ],
   imports: [
     BrowserModule,
