@@ -4,7 +4,7 @@ p {
   
   table {
     overflow: auto;
-    width: 80%;
+    width: 50%;
   }
   
   .example-container {
@@ -13,54 +13,14 @@ p {
     flex-basis: 300px;
   }
   
-  /* .mat-table {
-    overflow: auto;
-    max-height: 500px;
-  } */
   
   
-  .mat-column-project{
+/*   .mat-column-project{
   border-right: 1px solid grey;
   align-self: stretch;
   text-align: center
-  }
+  } */
   
-  .mat-column-mon{
-  border-right: 1px solid grey;
-  align-self: stretch;
-  text-align: center;
-  }
-  
-  .mat-column-tue{
-  border-right: 1px solid grey;
-  align-self: stretch;
-  text-align: center;
-  } 
-  
-  .mat-column-wed{
-    border-right: 1px solid grey;
-  text-align: center;
-  align-self: stretch;
-  }
-  
-  .mat-column-thru{
-    border-right: 1px solid grey;
-    text-align: center;
-    align-self: stretch;
-  }
-  
-  .mat-column-fri{
-    border-right: 1px solid grey;
-    text-align: center;
-    align-self: stretch;
-  }
-  
-  .mat-column-TotalHours{
-      /* border-left:1px solid grey;  */
-    /* border-right: 1px solid grey; */
-    text-align: center;
-    align-self: stretch;
-  }
   
   .mat-column-weight{
      align-self: stretch;
@@ -69,9 +29,16 @@ p {
   .example-button-row {
     display: table-cell;
     width: 490px;
+    margin: 15px;
   
   }
   
   .example-full-width {
     width: 100%;
   }
+
+  .divider{
+    width:25px;
+    height:auto;
+    display:inline-block;
+}

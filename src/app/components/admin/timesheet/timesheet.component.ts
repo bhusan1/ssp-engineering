@@ -7,13 +7,15 @@ import {Component} from '@angular/core';
   templateUrl: './timesheet.component.html',
 })
 export class TimesheetComponent {
+  /* displayedColumns: string[] = ['project', 'mon', 'tue', 'wed', 'thru', 'fri','TotalHours'];
+  dataSource = ELEMENT_DATA; */
 
   name= "Timesheet";
 
 
   timeEntryList: any =[
     {
-      projectName: "Modular Processing Unit",
+      projectName: "Shree Liquor",
       timeDistributionList:[
         {dayTitle:"Monday",Hours: null},
         {dayTitle:"Tuesday",Hours: null},
@@ -24,7 +26,7 @@ export class TimesheetComponent {
         {dayTitle:"Sunday",Hours: null},
     ]},
     {
-      projectName: "FICOTEQ Laydown trailer",
+      projectName: "Fresh & Fast Strip Mall",
       timeDistributionList:[
         {dayTitle:"Monday",Hours: null},
         {dayTitle:"Tuesday",Hours: null},
@@ -35,7 +37,7 @@ export class TimesheetComponent {
         {dayTitle:"Sunday",Hours: null},
     ]},
     {
-      projectName: "Gas Processing",
+      projectName: "Mount Pleasant Container Liquor Store",
       timeDistributionList:[
         {dayTitle:"Monday",Hours: null},
         {dayTitle:"Tuesday",Hours: null},
