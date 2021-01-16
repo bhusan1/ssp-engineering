@@ -8,7 +8,7 @@ import { MatSnackBar } from '@angular/material';
   selector: 'app-timesheet',
   styleUrls: ['./timesheet.component.css'],
   templateUrl: './timesheet.component.html',
-  providers:[FirebaseService]
+  providers: [FirebaseService]
 })
 export class TimesheetComponent implements OnInit, OnChanges {
 
@@ -31,12 +31,11 @@ export class TimesheetComponent implements OnInit, OnChanges {
   @Input() saturdayRemarks: string;
   @Input() sunday: number;
   @Input() sundayRemarks: string;
-  test: number;
 
   constructor(private fb: FormBuilder, private firebaseService: FirebaseService, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
-    this.test = 2;
+    this.monday = this.tuesday = this.wednesday = this.thrusday = this.friday = this.saturday = this.sunday = 0;
     this.buildForm();
   }
 
@@ -122,17 +121,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
     });
   }
 
-  /* getTotal(time){
-    let total = 0;
-    time.forEach(item =>{
-      total += Number(item.monday+item.tuesday+item.wednesday+item.thrusday+item.friday+item.saturday+item.sunday);
-    });
-
-    return total;
-  } */
-
-
+  getTotal(){
+    return this.monday + this.tuesday + this.wednesday + this.thrusday + this.friday + this.saturday + this.sunday;
+  }
 }
-
-
-
