@@ -9,7 +9,7 @@
     </mat-hint>
   </mat-form-field>
 
-  <button mat-raised-button (click)="addRow()">Add Project</button>
+<!--  <button mat-raised-button (click)="addRow()">Add Project</button>-->
     <!-- <mat-form-field >
         <mat-label>Employee name</mat-label>
         <textarea matInput placeholder="name"></textarea>
@@ -55,14 +55,14 @@
 
         <td>
           <mat-form-field class="full-width">
-            <textarea matInput placeholder="Enter Hours:" formControlName="monday" type="number" name="monday"></textarea>
+            <input matInput placeholder="Enter Hours:" [(ngModel)]="monday" formControlName="monday" type="number" name="monday">
             <mat-hint class="alert">
               <app-form-validator [control]="addProjectForm.controls.monday"></app-form-validator>
             </mat-hint>
           </mat-form-field>
           <!--remarks-->
           <mat-form-field class="full-width">
-            <textarea matInput placeholder="Remarks" formControlName="mondayRemarks" type="text" name="mondayRemarks"></textarea>
+            <input matInput placeholder="Remarks" formControlName="mondayRemarks" type="text" name="mondayRemarks">
             <mat-hint class="alert">
               <app-form-validator [control]="addProjectForm.controls.mondayRemarks"></app-form-validator>
             </mat-hint>
@@ -71,7 +71,7 @@
 
         <td>
           <mat-form-field class="full-width">
-            <input matInput placeholder="Enter Hours:" [ngModel]="tuesday" formControlName="tuesday" type="number" name="tuesday">
+            <input matInput placeholder="Enter Hours:" [(ngModel)]="tuesday" formControlName="tuesday" type="number" name="tuesday">
             <mat-hint class="alert">
               <app-form-validator [control]="addProjectForm.controls.tuesday"></app-form-validator>
             </mat-hint>
@@ -87,7 +87,7 @@
 
         <td>
           <mat-form-field class="full-width">
-            <textarea matInput placeholder="Enter Hours:" formControlName="wednesday" type="number" name="wednesday"></textarea>
+            <input matInput placeholder="Enter Hours:" [(ngModel)]="wednesday" formControlName="wednesday" type="number" name="wednesday">
             <mat-hint class="alert">
               <app-form-validator [control]="addProjectForm.controls.wednesday"></app-form-validator>
             </mat-hint>
@@ -102,7 +102,7 @@
         </td>
     <td>
       <mat-form-field class="full-width">
-        <textarea matInput placeholder="Enter Hours:" formControlName="test" type="number" name="thrusday"></textarea>
+        <input matInput placeholder="Enter Hours:" formControlName="thrusday" [(ngModel)]="thrusday" type="number" name="thrusday">
         <mat-hint class="alert">
           <app-form-validator [control]="addProjectForm.controls.thrusday"></app-form-validator>
         </mat-hint>
@@ -117,7 +117,7 @@
     </td>
     <td>
       <mat-form-field class="full-width">
-        <textarea matInput placeholder="Enter Hours:" formControlName="friday" type="number" name="friday"></textarea>
+        <input matInput placeholder="Enter Hours:" formControlName="friday" [(ngModel)]="friday" type="number" name="friday">
         <mat-hint class="alert">
           <app-form-validator [control]="addProjectForm.controls.friday"></app-form-validator>
         </mat-hint>
@@ -132,7 +132,7 @@
     </td>
     <td>
       <mat-form-field class="full-width">
-        <textarea matInput placeholder="Enter Hours:" formControlName="saturday" type="number" name="saturday"></textarea>
+        <input matInput placeholder="Enter Hours:" formControlName="saturday" [(ngModel)]="saturday" type="number" name="saturday">
         <mat-hint class="alert">
           <app-form-validator [control]="addProjectForm.controls.saturday"></app-form-validator>
         </mat-hint>
@@ -147,7 +147,7 @@
     </td>
     <td>
       <mat-form-field class="full-width">
-        <textarea matInput placeholder="Enter Hours:" formControlName="sunday" type="number" name="sunday"></textarea>
+        <input matInput placeholder="Enter Hours:" formControlName="sunday" [(ngModel)]="sunday" type="number" name="sunday">
         <mat-hint class="alert">
           <app-form-validator [control]="addProjectForm.controls.sunday"></app-form-validator>
         </mat-hint>
@@ -161,7 +161,7 @@
       </mat-form-field>
     </td>
     <td>
-      <span style="margin:15px">{{tuesday}}</span>
+      <span style="margin:15px">{{getTotal()}}</span>
     </td>
     </tr>
   </tbody>
