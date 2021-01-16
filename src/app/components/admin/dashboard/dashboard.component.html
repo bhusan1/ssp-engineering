@@ -15,6 +15,7 @@
         <a *ngIf="userAuthStatus" mat-list-item [routerLink]="[{ outlets: { sidebar: ['viewServices'] } }]" mat-list-item mat-list-item>View Services</a>
         <a *ngIf="userAuthStatus" mat-list-item [routerLink]="[{ outlets: { sidebar: ['addServices'] } }]" aria-selected mat-list-item>Add Services</a>
         <a *ngIf="userAuthStatus" mat-list-item [routerLink]="[{ outlets: { sidebar: ['timesheet'] } }]" aria-selected mat-list-item>Timesheet</a>
+        <a *ngIf="userAuthStatus" mat-list-item [routerLink]="[{ outlets: { sidebar: ['viewTimesheets'] } }]" aria-selected mat-list-item>View Timesheet</a>
         <a *ngIf="userAuthStatus" mat-list-item [routerLink]="[{ outlets: { sidebar: ['logout'] } }]">Logout</a>
       </mat-nav-list>
     </mat-sidenav>

@@ -1,0 +1,49 @@
+<mat-card *ngIf="noTimesheetsData">
+    No timesheet data available. Please add projects.
+</mat-card>
+  <mat-form-field *ngIf="!noTimesheetsData">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" />
+  </mat-form-field>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" *ngIf="!noTimesheetsData" multiTemplateDataRows>
+    <ng-container matColumnDef="{{ column }}" *ngFor="let column of displayedColumns">
+        <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
+        <td mat-cell *matCellDef="let element">
+          <div [ngSwitch]="column">
+            <span *ngSwitchCase="'monday'" matTooltip="{{ element[column] }}">{{ element[column] | slice: 0:75 }}...</span>
+            <span *ngSwitchCase="'tuesday'" matTooltip="{{ element[column] }}">{{ element[column] | slice: 0:75 }}...</span>
+            <span *ngSwitchCase="'wednesday'" matTooltip="{{ element[column] }}">{{ element[column] | slice: 0:75 }}...</span>
+            <span *ngSwitchCase="'thrusday'" matTooltip="{{ element[column] }}">{{ element[column] | slice: 0:75 }}...</span>
+            <span *ngSwitchCase="'friday'" matTooltip="{{ element[column] }}">{{ element[column] | slice: 0:75 }}...</span>
+            <span *ngSwitchCase="'saturday'" matTooltip="{{ element[column] }}">{{ element[column] | slice: 0:75 }}...</span>
+            <span *ngSwitchCase="'sunday'" matTooltip="{{ element[column] }}">{{ element[column] | slice: 0:75 }}...</span>
+            
+            <!-- <span *ngSwitchCase="'actions'">
+              <div class="example-button-row">
+                <button mat-icon-button color="primary" matTooltip="Edit">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" matTooltip="Delete">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </span> -->
+            <!-- <span *ngSwitchDefault>{{ element[column] }}</span> -->
+          </div>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let ele" [attr.colspan]="displayedColumns.length">
+            <div class="example-element-detail" [@detailExpand]="ele == expandedElement ? 'expanded' : 'collapsed'">
+        
+                <app-timesheet [projectId]="ele.projectId" [monday]="ele.monday" [tuesday]="ele.tuesday" [wednesday]="ele.wednesday"
+                [thrusday]= "ele.thrusday" [friday]="ele.friday" [saturday]="ele.saturday" [sunday]="ele.sunday" [title]="ele.title">
+                </app-timesheet>
+            </div>
+        </td>
+    </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let element; columns: displayedColumns" class="example-element-row" [class.example-expanded-row]="expandedElement === element" (click)="expandedElement = expandedElement === element ? null : element"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+</table>
