@@ -40,7 +40,7 @@ import { IndustrialComponent } from './components/industrial/industrial.componen
 import { MunicipalComponent } from './components/municipal/municipal.component';
 import { CommercialComponent } from './components/commercial/commercial.component';
 import { TimesheetComponent } from './components/admin/timesheet/timesheet.component';
-
+import { ViewTimesheetsComponent } from './components/admin/view-timesheets/view-timesheets.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,7 +73,7 @@ import { TimesheetComponent } from './components/admin/timesheet/timesheet.compo
     MunicipalComponent,
     CommercialComponent,
     TimesheetComponent,
-    
+    ViewTimesheetsComponent
   ],
   imports: [
     BrowserModule,
@@ -158,6 +158,11 @@ import { TimesheetComponent } from './components/admin/timesheet/timesheet.compo
           {
             path: 'timesheet',
             component: TimesheetComponent,
+            outlet: 'sidebar'
+          },
+          {
+            path: 'viewTimesheets',
+            component: ViewTimesheetsComponent,
             outlet: 'sidebar'
           },
           {
