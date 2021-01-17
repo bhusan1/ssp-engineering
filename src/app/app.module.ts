@@ -126,14 +126,14 @@ import { HelloComponent } from './components/admin/timesheet/hello.component';
       }, */
       
       {
-        path: 'dashboard',
+        path: 'admindashboard',
         component: DashboardComponent,
-        data: { roles: ['user', 'admin'] },
+        data: { roles: ['admin'] },
         canActivate: [AuthGuard],
         children: [
           {
             path: '**',
-            redirectTo: '/dashboard/(sidebar:viewProjects)',
+            redirectTo: '/admindashboard/(sidebar:viewProjects)',
             pathMatch: 'full'
           },
           {
@@ -158,6 +158,34 @@ import { HelloComponent } from './components/admin/timesheet/hello.component';
           },
           {
             path: 'timesheet',
+            component: TimesheetComponent,
+            outlet: 'sidebar'
+          },
+          {
+            path: 'logout',
+            component: LogoutComponent,
+            outlet: 'sidebar'
+          }
+        ]
+      },
+      {
+        path: 'userdashboard',
+        component: DashboardComponent,
+        data: { roles: ['user'] },
+        canActivate: [AuthGuard],
+        children: [
+          {
+            path: '**',
+            redirectTo: '/userdashboard/(sidebar:viewTimesheet)',
+            pathMatch: 'full'
+          },
+          {
+            path: 'viewTimesheet',
+            component: TimesheetComponent,
+            outlet: 'sidebar'
+          },
+          {
+            path: 'fillTimesheet',
             component: TimesheetComponent,
             outlet: 'sidebar'
           },
