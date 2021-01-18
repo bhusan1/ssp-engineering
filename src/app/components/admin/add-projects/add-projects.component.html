@@ -3,9 +3,13 @@
     <mat-grid-tile class="mat-grid-tile">
       <app-upload-file (projectImageUploaded)="setImageUrl($event)"></app-upload-file>    
     </mat-grid-tile>
+
+
     <mat-grid-tile class="mat-grid-tile">
       <mat-card class="add-project-details">
         <form class="add-project-form" [formGroup]="addProjectForm" autocomplete="off" (ngSubmit)="onSubmit()" novalidate>
+          
+          
           <mat-list>
             <mat-list-item>
               <mat-form-field class="full-width">
@@ -16,6 +20,8 @@
               </mat-form-field>
             </mat-list-item>
             <mat-list-item></mat-list-item>
+
+
             <mat-list-item>
               <mat-form-field class="full-width">
                 <textarea matInput placeholder="Project Description*" formControlName="description" type="text" name="description"></textarea>
@@ -25,6 +31,8 @@
               </mat-form-field>
             </mat-list-item>
             <mat-list-item></mat-list-item>
+
+
             <mat-list-item>
               <mat-form-field class="full-width">
                 <input matInput placeholder="Project Image URL*" formControlName="imageSrc" type="text" name="imageSrc" />
@@ -34,6 +42,8 @@
               </mat-form-field>
             </mat-list-item>
             <mat-list-item></mat-list-item>
+
+            
             <mat-list-item>
               <button mat-raised-button color="primary" mat-raised-button type="submit" [disabled]="addProjectForm.invalid" class="add-project-button">Add Project</button>
               <button mat-raised-button type="button" id="resetformButton" *ngIf="addProjectForm.touched || addProjectForm.dirty" (click)="resetForm()">Reset</button>

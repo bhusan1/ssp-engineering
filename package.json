@@ -24,6 +24,8 @@
     "@angular/platform-browser": "^6.1.0",
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
+    "@progress/kendo-angular-grid": "^5.0.0",
+    "@progress/kendo-angular-inputs": "^7.0.0",
     "core-js": "^2.5.4",
     "firebase": "^6.1.0",
     "firebase-tools": "^9.1.0",
