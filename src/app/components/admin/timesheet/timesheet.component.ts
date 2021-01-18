@@ -1,30 +1,5 @@
 import {Component} from '@angular/core';
 
-
-/* export interface PeriodicElement {
-  project: string;
-  mon: number;
-  tue: number;
-  wed: number;
-  thru: number;
-  fri: number;
-  TotalHours: number;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {project: 'Modular Processing Unit', mon: null, tue: 1, wed: 1, thru: 1, fri: 1, TotalHours:7},
-  {project: 'FICOTEQ Laydown trailer', mon: 4, tue: 1, wed: 1, thru: 1, fri: 1, TotalHours:7},
-  {project: 'Gas Processing', mon: 2, tue: 1, wed: 1, thru: 1, fri: 1, TotalHours:7},
-  {project: 'GULEI Stack Extension', mon: 1, tue: 1, wed: 1, thru: 1, fri: 1, TotalHours:7},
-  {project: 'Fractionation', mon: 0, tue: 1, wed: 1, thru: 1, fri: 1, TotalHours:7},
-  {project: 'Targa Little Missouri IV', mon: 1, tue: 1, wed: 1, thru: 1, fri: 1, TotalHours:7},
-  {project: 'a', mon: 0, tue: 0, wed: 0, thru: 0, fri: 0, TotalHours:0},
-  {project: 'a', mon: 0, tue: 0, wed: 0, thru: 0, fri: 0, TotalHours:0},
-  {project: 'a', mon: 0, tue: 0, wed: 0, thru: 0, fri: 0, TotalHours:0},
-  {project: 'a', mon: 0, tue: 0, wed: 0, thru: 0, fri: 0, TotalHours:0},
-]; */
-
-
 @Component({
   selector: 'app-timesheet',
   styleUrls: ['./timesheet.component.css'],
