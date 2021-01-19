@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from "@angular/core";
+import { Component, OnInit, OnChanges } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { FirebaseService } from "app/services/firebase.service";
 import { MatSnackBar } from "@angular/material";
@@ -16,24 +16,6 @@ export class TimesheetComponent implements OnInit, OnChanges {
   totalWeeks: any[];
   days:  any[];
   listofProjects:  any[];
-  @Input() selectedWeek: any;
-  @Input() projectId: string;
-  @Input() employeeName: string;
-  @Input() title: string;
-  @Input() monday: number;
-  @Input() mondayRemarks: string;
-  @Input() tuesday: number;
-  @Input() tuesdayRemarks: string;
-  @Input() wednesday: number;
-  @Input() wednesdayRemarks: string;
-  @Input() thrusday: number;
-  @Input() thrusdayRemarks: string;
-  @Input() friday: number;
-  @Input() fridayRemarks: string;
-  @Input() saturday: number;
-  @Input() saturdayRemarks: string;
-  @Input() sunday: number;
-  @Input() sundayRemarks: string;
 
   constructor(
     private fb: FormBuilder,
@@ -42,7 +24,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnInit() {
-    this.monday = this.tuesday = this.wednesday = this.thrusday = this.friday = this.saturday = this.sunday = 0;
+    
     this.buildForm();
     this.totalWeeks =  this.getWeeks();
     this.getAllProjects();
@@ -52,31 +34,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
     this.buildForm();
   }
 
-  checkIfUpdateIsNeeded(): Boolean {
-    if (
-      this.projectId &&
-      this.employeeName &&
-      this.title &&
-      this.monday &&
-      this.mondayRemarks &&
-      this.tuesday &&
-      this.tuesdayRemarks &&
-      this.wednesday &&
-      this.wednesdayRemarks &&
-      this.thrusday &&
-      this.thrusdayRemarks &&
-      this.friday &&
-      this.fridayRemarks &&
-      this.saturday &&
-      this.saturdayRemarks &&
-      this.sunday &&
-      this.sundayRemarks
-    ) {
-      return true;
-    }
-    return false;
-  }
-
+ 
   resetForm() {
     this.addProjectForm.reset();
     this.buildForm();
@@ -84,51 +42,64 @@ export class TimesheetComponent implements OnInit, OnChanges {
 
   buildForm(): void {
     this.addProjectForm = this.fb.group({
-      title: [this.title, [Validators.required]],
-      selectedWeek:  [this.selectedWeek,[Validators.required]],
-      employeeName: [this.employeeName, [Validators.required]],
-
-      monday: [this.monday, [Validators.required]],
-      mondayRemarks: [this.mondayRemarks],
-
-      tuesday: [this.tuesday, [Validators.required]],
-      tuesdayRemarks: [this.tuesdayRemarks],
-
-      wednesday: [this.wednesday, [Validators.required]],
-      wednesdayRemarks: [this.wednesdayRemarks],
-
-      thrusday: [this.thrusday, [Validators.required]],
-      thrusdayRemarks: [this.thrusdayRemarks],
-
-      friday: [this.friday, [Validators.required]],
-      fridayRemarks: [this.fridayRemarks],
-
-      saturday: [this.saturday, [Validators.required]],
-      saturdayRemarks: [this.saturdayRemarks],
-
-      sunday: [this.sunday, [Validators.required]],
-      sundayRemarks: [this.sundayRemarks],
+      projectName: ['', [Validators.required]],
+      selectedWeek:  ['',[Validators.required]],
+      employeeName: ['', [Validators.required]],
+      day1 : this.fb.group({
+        hour: ['',[Validators.required]],
+        date:  ['',[Validators.required]],
+        comment: ['',[Validators.required]]
+      }),
+      day2 : this.fb.group({
+        hour: ['',[Validators.required]],
+        date:  ['',[Validators.required]],
+        comment: ['',[Validators.required]]
+      }),
+      day3 : this.fb.group({
+        hour: ['',[Validators.required]],
+        date:  ['',[Validators.required]],
+        comment: ['',[Validators.required]]
+      }),
+      day4 : this.fb.group({
+        hour: ['',[Validators.required]],
+        date:  ['',[Validators.required]],
+        comment: ['',[Validators.required]]
+      }),
+      day5 : this.fb.group({
+        hour: ['',[Validators.required]],
+        date:  ['',[Validators.required]],
+        comment: ['',[Validators.required]]
+      }),
+      day6 : this.fb.group({
+        hour: ['',[Validators.required]],
+        date:  ['',[Validators.required]],
+        comment: ['',[Validators.required]]
+      }),
+      day7 : this.fb.group({
+        hour: ['',[Validators.required]],
+        date:  ['',[Validators.required]],
+        comment: ['',[Validators.required]]
+      })
+      
     });
   }
 
   onSubmit(): void {
-    if (this.checkIfUpdateIsNeeded) {
-      this.addDataToFirebase();
-    }
+    console.log("final Object",this.addProjectForm.value);
   }
 
   addDataToFirebase(): void {
-    const projectId = this.projectId
-      ? this.projectId
+    const timesheetId = this.addProjectForm.value.timesheetId
+      ? this.addProjectForm.value.timesheetId
       : this.firebaseService.createDocumentId();
     const createdAt = this.firebaseService.getFirestoreTimestamp();
     const updatedAt = this.firebaseService.getFirestoreTimestamp();
-    const data = projectId
-      ? { projectId, updatedAt, ...this.addProjectForm.value }
-      : { projectId, createdAt, updatedAt, ...this.addProjectForm.value };
-    const fbRef = "/timesheet/" + projectId.replace(/\s/g, "");
-    const msg = this.projectId ? "Timesheet Updated" : "Timesheet Added";
-    if (this.projectId) {
+    const data = timesheetId
+      ? { timesheetId, updatedAt, ...this.addProjectForm.value }
+      : { timesheetId, createdAt, updatedAt, ...this.addProjectForm.value };
+    const fbRef = "/timesheet/" + timesheetId.replace(/\s/g, "");
+    const msg = timesheetId ? "Timesheet Updated" : "Timesheet Added";
+    if (timesheetId) {
       this.firebaseService.updateFirestoreDocument(fbRef, data).then(() => {
         this.showToast(msg);
       });
@@ -152,13 +123,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
 
   getTotal() {
     return (
-      this.monday +
-      this.tuesday +
-      this.wednesday +
-      this.thrusday +
-      this.friday +
-      this.saturday +
-      this.sunday
+      0
     );
   }
 
@@ -196,7 +161,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
 
   getAllProjects() {
     this.firebaseService
-      .getFirestoreCollection('/projects')
+      .getFirestoreCollection('/projectList')
       .valueChanges()
       .subscribe((projectData: any[]) => {
         if (projectData) {       
@@ -208,6 +173,6 @@ export class TimesheetComponent implements OnInit, OnChanges {
   }
 
   onChangeofWeek(){
-    this.days =  this.getArrayOfDay(this.selectedWeek.startDate);
+    this.days =  this.getArrayOfDay(this.addProjectForm.value.startDate);
   }
 }
