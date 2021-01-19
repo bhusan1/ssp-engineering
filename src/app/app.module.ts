@@ -155,6 +155,16 @@ import { ViewTimesheetComponent } from './components/admin/view-timesheet/viewti
             path: 'addServices',
             component: AddServicesComponent,
             outlet: 'sidebar'
+          },
+          {
+            path: 'viewtimesheet',
+            component: ViewTimesheetComponent,
+            outlet: 'sidebar'
+          },
+          {
+            path: 'timesheet',
+            component: TimesheetComponent,
+            outlet: 'sidebar'
           },         
           {
             path: 'logout',
