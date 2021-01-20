@@ -1,6 +1,6 @@
 <div class="mat-elevation-z8 customWidth"> 
 
-  <form class="add-project-form" [formGroup]="parentTimeshetForm" autocomplete="off" (ngSubmit)="onSubmit()" novalidate>
+  <form class="add-project-form" [formGroup]="parentTimesheetForm" autocomplete="off" (ngSubmit)="onSubmit()" novalidate>
     <div>
         <label>Employee Name :  TEST</label>
 
@@ -14,10 +14,10 @@
         </mat-select>
       </mat-form-field>
 
-      <table border="1" style="width:100%" *ngIf="parentTimeshetForm.get('selectedWeek').value">
+      <table border="1" style="width:100%" *ngIf="parentTimesheetForm.get('selectedWeek').value">
         <thead>
           <tr>
-            <th style="width: 25%; text-align:center">Project {{ parentTimeshetForm.controls.addTimesheet}}</th>
+            <th style="width: 25%; text-align:center">Project {{ parentTimesheetForm.controls.addTimesheet}}</th>
             <th style="width: 8%; text-align:center" *ngFor="let day of days">{{day}}</th>        
             <th style="width: 15%; text-align:center">Total Hours</th>
           </tr>
@@ -38,7 +38,7 @@
               <mat-form-field class="full-width">
                 <input matInput placeholder="Enter Hours:" formControlName="hour" type="number" name="day1hour" value="0">
                 <mat-hint class="alert">
-                 <!--  <app-form-validator [control]="addProjectForm.controls.day1.controls"></app-form-validator> -->
+                  <app-form-validator [control]="addProjectForm.controls.day1.controls"></app-form-validator>
                 </mat-hint>
               </mat-form-field>
                 <!--remarks-->
@@ -158,7 +158,7 @@
       <mat-list-item>
         <button mat-raised-button color="primary" mat-raised-button type="submit" class="add-project-button">Submit</button>
         <!-- <button mat-raised-button color="primary" mat-raised-button type="submit" [disabled]="addProjectForm.invalid" class="add-project-button">Submit</button> -->
-        <button mat-raised-button type="button" id="resetformButton" *ngIf="parentTimeshetForm.touched || parentTimeshetForm.dirty" (click)="resetForm()">Reset</button>
+        <button mat-raised-button type="button" id="resetformButton" *ngIf="parentTimesheetForm.touched || parentTimesheetForm.dirty" (click)="resetForm()">Reset</button>
       </mat-list-item>
 
   </form>

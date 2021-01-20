@@ -17,7 +17,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
   days:  any[];
   listofProjects:  any[];
   addProjectForm: FormGroup;
-  parentTimeshetForm: FormGroup;
+  parentTimesheetForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -43,10 +43,10 @@ export class TimesheetComponent implements OnInit, OnChanges {
     this.buildForm();
   }
 
-  get t(){return  this.parentTimeshetForm.controls.addTimesheet as FormArray}
+  get t(){return  this.parentTimesheetForm.controls.addTimesheet as FormArray}
 
   buildForm(): void {
-    this.parentTimeshetForm = this.fb.group({
+    this.parentTimesheetForm = this.fb.group({
       selectedWeek:  ['',[Validators.required]],
       addTimesheet:  new FormArray([])
     })
@@ -95,18 +95,18 @@ export class TimesheetComponent implements OnInit, OnChanges {
   }
 
   onSubmit(): void {
-    console.log("final Object",this.parentTimeshetForm.value);
+    console.log("final Object",this.parentTimesheetForm.value);
   }
 
   addDataToFirebase(): void {
-    const timesheetId = this.parentTimeshetForm.value.timesheetId
-      ? this.parentTimeshetForm.value.timesheetId
+    const timesheetId = this.parentTimesheetForm.value.timesheetId
+      ? this.parentTimesheetForm.value.timesheetId
       : this.firebaseService.createDocumentId();
     const createdAt = this.firebaseService.getFirestoreTimestamp();
     const updatedAt = this.firebaseService.getFirestoreTimestamp();
     const data = timesheetId
-      ? { timesheetId, updatedAt, ...this.parentTimeshetForm.value }
-      : { timesheetId, createdAt, updatedAt, ...this.parentTimeshetForm.value };
+      ? { timesheetId, updatedAt, ...this.parentTimesheetForm.value }
+      : { timesheetId, createdAt, updatedAt, ...this.parentTimesheetForm.value };
     const fbRef = "/timesheet/" + timesheetId.replace(/\s/g, "");
     const msg = timesheetId ? "Timesheet Updated" : "Timesheet Added";
     if (timesheetId) {
@@ -176,6 +176,6 @@ export class TimesheetComponent implements OnInit, OnChanges {
   }
 
   onChangeofWeek(){
-    this.days =  this.getArrayOfDay(this.parentTimeshetForm.value.selectedWeek.startDate);
+    this.days =  this.getArrayOfDay(this.parentTimesheetForm.value.selectedWeek.startDate);
   }
 }
