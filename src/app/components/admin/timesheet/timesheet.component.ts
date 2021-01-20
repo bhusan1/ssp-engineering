@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
 import { FirebaseService } from "app/services/firebase.service";
 import { MatSnackBar } from "@angular/material";
 import * as moment from "moment";
@@ -11,11 +11,13 @@ import * as moment from "moment";
   providers: [FirebaseService],
 })
 export class TimesheetComponent implements OnInit, OnChanges {
-  addProjectForm: FormGroup;
+  
   hideResetButton = true;
   totalWeeks: any[];
   days:  any[];
   listofProjects:  any[];
+  addProjectForm: FormGroup;
+  parentTimeshetForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -28,6 +30,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
     this.buildForm();
     this.totalWeeks =  this.getWeeks();
     this.getAllProjects();
+    
   }
 
   ngOnChanges() {
@@ -36,14 +39,21 @@ export class TimesheetComponent implements OnInit, OnChanges {
 
  
   resetForm() {
-    this.addProjectForm.reset();
+    //this.addProjectForm.reset();
     this.buildForm();
   }
 
+  get t(){return  this.parentTimeshetForm.controls.addTimesheet as FormArray}
+
   buildForm(): void {
+    this.parentTimeshetForm = this.fb.group({
+      selectedWeek:  ['',[Validators.required]],
+      addTimesheet:  new FormArray([])
+    })
+    this.t.push(this.addProjectForm);
     this.addProjectForm = this.fb.group({
       projectName: ['', [Validators.required]],
-      selectedWeek:  ['',[Validators.required]],
+      
       employeeName: ['', [Validators.required]],
       day1 : this.fb.group({
         hour: ['',[Validators.required]],
@@ -85,18 +95,18 @@ export class TimesheetComponent implements OnInit, OnChanges {
   }
 
   onSubmit(): void {
-    console.log("final Object",this.addProjectForm.value);
+    console.log("final Object",this.parentTimeshetForm.value);
   }
 
   addDataToFirebase(): void {
-    const timesheetId = this.addProjectForm.value.timesheetId
-      ? this.addProjectForm.value.timesheetId
+    const timesheetId = this.parentTimeshetForm.value.timesheetId
+      ? this.parentTimeshetForm.value.timesheetId
       : this.firebaseService.createDocumentId();
     const createdAt = this.firebaseService.getFirestoreTimestamp();
     const updatedAt = this.firebaseService.getFirestoreTimestamp();
     const data = timesheetId
-      ? { timesheetId, updatedAt, ...this.addProjectForm.value }
-      : { timesheetId, createdAt, updatedAt, ...this.addProjectForm.value };
+      ? { timesheetId, updatedAt, ...this.parentTimeshetForm.value }
+      : { timesheetId, createdAt, updatedAt, ...this.parentTimeshetForm.value };
     const fbRef = "/timesheet/" + timesheetId.replace(/\s/g, "");
     const msg = timesheetId ? "Timesheet Updated" : "Timesheet Added";
     if (timesheetId) {
@@ -110,11 +120,6 @@ export class TimesheetComponent implements OnInit, OnChanges {
     }
   }
 
-  /* addRow() {
-    this.addProjectForm.data.push(this.createNewUser(this.dataSource.data.length + 1));
-    this.dataSource.filter = "";
-  } */
-
   showToast(msg): void {
     this.snackBar.open(msg, "X", {
       duration: 3000,
@@ -122,9 +127,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
   }
 
   getTotal() {
-    return (
-      0
-    );
+
   }
 
   getWeeks() {
@@ -173,6 +176,6 @@ export class TimesheetComponent implements OnInit, OnChanges {
   }
 
   onChangeofWeek(){
-    this.days =  this.getArrayOfDay(this.addProjectForm.value.startDate);
+    this.days =  this.getArrayOfDay(this.parentTimeshetForm.value.selectedWeek.startDate);
   }
 }

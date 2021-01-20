@@ -12,6 +12,9 @@ p {
     flex-direction: column;
     flex-basis: 300px;
   }
+  .customWidth{
+    width: 1533px;
+  }
   
   
   
