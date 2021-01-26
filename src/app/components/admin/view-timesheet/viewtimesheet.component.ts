@@ -11,7 +11,7 @@ export class ViewTimesheetComponent {
 
   displayedColumns: string[] = ['projectid','startDate','endDate','day1','day2','day3','day4','day5','day6','day7','totalHour'];
   dataSource: MatTableDataSource<any>;
-  noTimesheet: boolean;
+  noTimesheet = true;
   daysLabel: any;
   employeeName: string;
   
@@ -27,8 +27,8 @@ export class ViewTimesheetComponent {
     this.firebaseService
       .getFirestoreCollection('/timesheets')
       .valueChanges()
-      .subscribe(timesheetData => {
-        if (timesheetData) {
+      .subscribe((timesheetData: any[]) => {
+        if (timesheetData.length >0) {
           this.noTimesheet = false;
           this.employeeName = timesheetData[0].Username;
           this.dataSource = new MatTableDataSource(timesheetData);

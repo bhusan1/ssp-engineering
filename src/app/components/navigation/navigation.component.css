@@ -69,6 +69,24 @@
   display: none;
 }
 
+
+.cover {
+  position: absolute;
+  top: 0; right: 0;
+  bottom: 0; left: 0;
+  width: 23%;
+  height: 100%;
+  color: rgb(250, 255, 255,1);
+  text-align: right;
+  transition: all 1s linear;
+}
+
+.cover:hover {
+  background-color: rgba(158, 25, 25, 0.8);
+  color: rgba(255,255,255,1);
+  transition: all .2s linear;
+}
+
 .main_menu_area .navbar.navbar-default .nav.navbar-nav.navbar-right li {
   margin-right: 28px;
 }
