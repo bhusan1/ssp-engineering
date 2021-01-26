@@ -2,7 +2,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { UserLogin } from '../models/user-login.model';
 import { User } from '../models/user.model';
 import { FirebaseService } from './firebase.service';
@@ -103,7 +103,7 @@ export class AuthService {
           });
       }
       else {
-        this.ngZone.run(() => this.router.navigate(['/login']));
+        //this.ngZone.run(() => this.router.navigate(['/login']));
       }
     });
   }

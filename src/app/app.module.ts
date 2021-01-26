@@ -41,6 +41,7 @@ import { MunicipalComponent } from './components/municipal/municipal.component';
 import { CommercialComponent } from './components/commercial/commercial.component';
 import { TimesheetComponent } from './components/admin/timesheet/timesheet.component';
 import { HelloComponent } from './components/admin/timesheet/hello.component';
+import { ViewTimesheetComponent } from './components/admin/view-timesheet/viewtimesheet.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { HelloComponent } from './components/admin/timesheet/hello.component';
     MunicipalComponent,
     CommercialComponent,
     TimesheetComponent,
+    ViewTimesheetComponent,
     HelloComponent
   ],
   imports: [
@@ -155,12 +157,7 @@ import { HelloComponent } from './components/admin/timesheet/hello.component';
             path: 'addServices',
             component: AddServicesComponent,
             outlet: 'sidebar'
-          },
-          {
-            path: 'timesheet',
-            component: TimesheetComponent,
-            outlet: 'sidebar'
-          },
+          },          
           {
             path: 'logout',
             component: LogoutComponent,
@@ -176,16 +173,16 @@ import { HelloComponent } from './components/admin/timesheet/hello.component';
         children: [
           {
             path: '**',
-            redirectTo: '/userdashboard/(sidebar:viewTimesheet)',
+            redirectTo: '/userdashboard/(sidebar:viewtimesheet)',
             pathMatch: 'full'
           },
           {
-            path: 'viewTimesheet',
-            component: TimesheetComponent,
+            path: 'viewtimesheet',
+            component: ViewTimesheetComponent,
             outlet: 'sidebar'
           },
           {
-            path: 'fillTimesheet',
+            path: 'timesheet',
             component: TimesheetComponent,
             outlet: 'sidebar'
           },
