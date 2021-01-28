@@ -1,5 +1,4 @@
 import { Component, OnInit, OnChanges } from "@angular/core";
-import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
 import { FirebaseService } from "app/services/firebase.service";
 import { MatSnackBar } from "@angular/material";
 import * as moment from "moment";
@@ -16,86 +15,39 @@ export class TimesheetComponent implements OnInit, OnChanges {
   totalWeeks: any[];
   days:  any[];
   listofProjects:  any[];
-  addProjectForm: FormGroup;
-  parentTimesheetForm: FormGroup;
+  parentTimesheetForm: any;  
 
   constructor(
-    private fb: FormBuilder,
+    
     private firebaseService: FirebaseService,
     private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
     
-    this.buildForm();
+   // this.buildForm();
+    this.parentTimesheetForm= {};
     this.totalWeeks =  this.getWeeks();
     this.getAllProjects();
     
   }
 
   ngOnChanges() {
-    this.buildForm();
+    //this.buildForm();
   }
 
  
   resetForm() {
     //this.addProjectForm.reset();
-    this.buildForm();
+    
   }
 
-  get t(){return  this.parentTimesheetForm.controls.addTimesheet as FormArray}
-
-  buildForm(): void {
-    this.parentTimesheetForm = this.fb.group({
-      selectedWeek:  ['',[Validators.required]],
-      addTimesheet:  new FormArray([])
-    })
-    this.t.push(this.addProjectForm);
-    this.addProjectForm = this.fb.group({
-      projectName: ['', [Validators.required]],
-      
-      employeeName: ['', [Validators.required]],
-      day1 : this.fb.group({
-        hour: ['',[Validators.required]],
-        date:  ['',[Validators.required]],
-        comment: ['',[Validators.required]]
-      }),
-      day2 : this.fb.group({
-        hour: ['',[Validators.required]],
-        date:  ['',[Validators.required]],
-        comment: ['',[Validators.required]]
-      }),
-      day3 : this.fb.group({
-        hour: ['',[Validators.required]],
-        date:  ['',[Validators.required]],
-        comment: ['',[Validators.required]]
-      }),
-      day4 : this.fb.group({
-        hour: ['',[Validators.required]],
-        date:  ['',[Validators.required]],
-        comment: ['',[Validators.required]]
-      }),
-      day5 : this.fb.group({
-        hour: ['',[Validators.required]],
-        date:  ['',[Validators.required]],
-        comment: ['',[Validators.required]]
-      }),
-      day6 : this.fb.group({
-        hour: ['',[Validators.required]],
-        date:  ['',[Validators.required]],
-        comment: ['',[Validators.required]]
-      }),
-      day7 : this.fb.group({
-        hour: ['',[Validators.required]],
-        date:  ['',[Validators.required]],
-        comment: ['',[Validators.required]]
-      })
-      
-    });
+  buildForm(days:  any[]): void {   
+   this.parentTimesheetForm.projects = [{day1: {date: days[0]}, day2: {date: days[1]},day3: {date: days[2]},day4: {date: days[3]},day5: {date: days[4]}, day6: {date: days[5]}, day7:{date: days[6]}}];
   }
 
   onSubmit(): void {
-    console.log("final Object",this.parentTimesheetForm.value);
+    console.log("final Object",this.parentTimesheetForm);
   }
 
   addDataToFirebase(): void {
@@ -126,9 +78,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
     });
   }
 
-  getTotal() {
-
-  }
+ 
 
   getWeeks() {
     var weeks = [];
@@ -176,6 +126,11 @@ export class TimesheetComponent implements OnInit, OnChanges {
   }
 
   onChangeofWeek(){
-    this.days =  this.getArrayOfDay(this.parentTimesheetForm.value.selectedWeek.startDate);
+    this.days =  this.getArrayOfDay(this.parentTimesheetForm.selectedWeek.startDate);
+    this.buildForm(this.days);
+  }
+
+  updateTotal(project: any){
+    project.totalHour =  project.day1.hour + project.day2.hour + project.day3.hour + project.day4.hour + project.day5.hour + project.day6.hour + project.day7.hour; 
   }
 }
