@@ -16,6 +16,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
   days:  any[];
   listofProjects:  any[];
   parentTimesheetForm: any;  
+  isAddProjectValid: boolean;
 
   constructor(
     
@@ -131,6 +132,26 @@ export class TimesheetComponent implements OnInit, OnChanges {
   }
 
   updateTotal(project: any){
-    project.totalHour =  project.day1.hour + project.day2.hour + project.day3.hour + project.day4.hour + project.day5.hour + project.day6.hour + project.day7.hour; 
+    project.totalHour =  (Number(project.day1.hour) || 0) + (Number(project.day2.hour) || 0) + (Number(project.day3.hour) || 0) + (Number(project.day4.hour) || 0) + (Number(project.day5.hour) || 0) 
+    + (Number(project.day6.hour) || 0) + (Number(project.day7.hour) || 0);
+    this.isValidPreviousRecord();
   }
+
+  addNewProject(){
+    this.parentTimesheetForm.projects.push({day1: {date: this.days[0]}, day2: {date: this.days[1]},day3: {date: this.days[2]},day4: {date: this.days[3]},day5: {date: this.days[4]}, day6: {date: this.days[5]}, day7:{date: this.days[6]}})
+  }
+
+  isValidPreviousRecord(){
+    const filteredList = this.parentTimesheetForm.projects.filter(obj => {
+      if(obj.day1.hour && obj.day2.hour && obj.day3.hour && obj.day4.hour && obj.day5.hour && obj.day6.hour && obj.day7.hour){
+        return false;
+      }
+      return true;
+    })
+    if(filteredList.length){
+      this.isAddProjectValid = false;
+    }
+    this.isAddProjectValid = true;
+  }
+
 }
