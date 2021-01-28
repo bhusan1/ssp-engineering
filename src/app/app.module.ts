@@ -40,7 +40,7 @@ import { IndustrialComponent } from './components/industrial/industrial.componen
 import { MunicipalComponent } from './components/municipal/municipal.component';
 import { CommercialComponent } from './components/commercial/commercial.component';
 import { TimesheetComponent } from './components/admin/timesheet/timesheet.component';
-import { HelloComponent } from './components/admin/timesheet/hello.component';
+import { ViewTimesheetComponent } from './components/admin/view-timesheet/viewtimesheet.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +74,7 @@ import { HelloComponent } from './components/admin/timesheet/hello.component';
     MunicipalComponent,
     CommercialComponent,
     TimesheetComponent,
-    HelloComponent
+    ViewTimesheetComponent
   ],
   imports: [
     BrowserModule,
@@ -126,14 +126,14 @@ import { HelloComponent } from './components/admin/timesheet/hello.component';
       }, */
       
       {
-        path: 'dashboard',
+        path: 'admindashboard',
         component: DashboardComponent,
-        data: { roles: ['user', 'admin'] },
+        data: { roles: ['admin'] },
         canActivate: [AuthGuard],
         children: [
           {
             path: '**',
-            redirectTo: '/dashboard/(sidebar:viewProjects)',
+            redirectTo: '/admindashboard/(sidebar:viewProjects)',
             pathMatch: 'full'
           },
           {
@@ -154,6 +154,39 @@ import { HelloComponent } from './components/admin/timesheet/hello.component';
           {
             path: 'addServices',
             component: AddServicesComponent,
+            outlet: 'sidebar'
+          },
+          {
+            path: 'viewtimesheet',
+            component: ViewTimesheetComponent,
+            outlet: 'sidebar'
+          },
+          {
+            path: 'timesheet',
+            component: TimesheetComponent,
+            outlet: 'sidebar'
+          },         
+          {
+            path: 'logout',
+            component: LogoutComponent,
+            outlet: 'sidebar'
+          }
+        ]
+      },
+      {
+        path: 'userdashboard',
+        component: DashboardComponent,
+        data: { roles: ['user'] },
+        canActivate: [AuthGuard],
+        children: [
+          {
+            path: '**',
+            redirectTo: '/userdashboard/(sidebar:viewtimesheet)',
+            pathMatch: 'full'
+          },
+          {
+            path: 'viewtimesheet',
+            component: ViewTimesheetComponent,
             outlet: 'sidebar'
           },
           {

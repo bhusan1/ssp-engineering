@@ -1,53 +1,152 @@
-<hello name="{{ name }}"></hello>
+<div class="mat-elevation-z8 customWidth"> 
+    <div>
+        <label>Employee Name :  TEST</label>
 
-<table border="1">
-  <thead>
-    <tr>
-      <th style="text-align: center;">Project</th>
-      <th style="text-align: center;">Date: Jan 4- Jan 8</th>
-      
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor = "let applicant of timeEntryList ">
-      <td style="text-align: center;">{{applicant.projectName}}</td>
-      <td>
-        <table>
-          <th style="text-align: center;" *ngFor="let timeMarks of applicant.timeDistributionList">
-            {{timeMarks.dayTitle}}
-          </th>
-          <tbody>
-            <tr>
-              <td *ngFor="let timeMarks of applicant.timeDistributionList">
-                <input type="text" [(ngModel)]="timeMarks.Hours"/>
-                <!-- <input type="text" /> -->
-                <mat-form-field class="example-full-width">
-                  <mat-label>Leave a comment</mat-label>
-                  <textarea matInput placeholder="Ex. What you did on this project"></textarea>
-                </mat-form-field>
-              </td>
-                <span style="text-align: center; font-weight: bold;">Total Hours :{{getTotal(applicant.timeDistributionList) }}</span>
-            </tr>
-            <tr>
-              
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-  </tbody>
+              <!--  Add Project button
+                  View Older timesheet and edit -->
+    </div>
+      <mat-form-field appearance="fill">
+        <mat-label>Select the Week</mat-label>
+          <mat-select  [(ngModel)]="parentTimesheetForm.selectedWeek" (selectionChange)="onChangeofWeek()" >  
+          <mat-option *ngFor="let week of totalWeeks" [value]="week">{{week.startDate}}- {{week.endDate}}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
+      <table border="1" style="width:100%" *ngIf="parentTimesheetForm.selectedWeek">
+        <thead>
+          <tr>
+            <th style="width: 25%; text-align:center">Project </th>
+            <th style="width: 8%; text-align:center" *ngFor="let day of days">{{day}}</th>        
+            <th style="width: 15%; text-align:center">Total Hours</th>
+          </tr>
+        </thead>
 
-</table>
+        <tbody>
+          <tr *ngFor="let project of parentTimesheetForm.projects">
+            <td >
+              <mat-form-field appearance="fill">
+                <mat-label>Select Project</mat-label>
+                <mat-select  [(ngModel)]="project.projectName">
+                  <mat-option *ngFor="let item of listofProjects" [value]="item.projectId">{{item.title}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
 
-<div class="example-button-row">
-  <button mat-raised-button>Save</button>
+            <td>
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Enter Hours:" [(ngModel)]="project.day1.hour" type="number" name="day1hour" value="0" (change)="updateTotal(project)">
+               
+              </mat-form-field>
+                <!--remarks-->
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Remarks"  type="text" name="day1comment" [(ngModel)]="project.day1.comment">
+                <mat-hint class="alert">
+                  <!-- <app-form-validator [control]="addProjectForm.controls.day1.controls"></app-form-validator> -->
+                </mat-hint>
+              </mat-form-field>
+            </td>
+
+            <td>
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Enter Hours:" [(ngModel)]="project.day2.hour" type="number" name="day2hour" value="0" (change)="updateTotal(project)">
+               
+              </mat-form-field>
+                <!--remarks-->
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Remarks"  type="text" name="day2comment" [(ngModel)]="project.day2.comment">
+                <mat-hint class="alert">
+                  <!-- <app-form-validator [control]="addProjectForm.controls.day1.controls"></app-form-validator> -->
+                </mat-hint>
+              </mat-form-field>
+            </td>
+
+            <td>
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Enter Hours:" [(ngModel)]="project.day3.hour" type="number" name="day3hour" value="0" (change)="updateTotal(project)">
+               
+              </mat-form-field>
+                <!--remarks-->
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Remarks"  type="text" name="day3comment" [(ngModel)]="project.day3.comment">
+                <mat-hint class="alert">
+                  <!-- <app-form-validator [control]="addProjectForm.controls.day1.controls"></app-form-validator> -->
+                </mat-hint>
+              </mat-form-field>
+            </td>
+
+            <td>
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Enter Hours:" [(ngModel)]="project.day4.hour" type="number" name="day4hour" value="0" (change)="updateTotal(project)">
+               
+              </mat-form-field>
+                <!--remarks-->
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Remarks"  type="text" name="day4comment" [(ngModel)]="project.day4.comment">
+                <mat-hint class="alert">
+                  <!-- <app-form-validator [control]="addProjectForm.controls.day1.controls"></app-form-validator> -->
+                </mat-hint>
+              </mat-form-field>
+            </td>
+
+            <td>
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Enter Hours:" [(ngModel)]="project.day5.hour" type="number" name="day5hour" value="0" (change)="updateTotal(project)">
+               
+              </mat-form-field>
+                <!--remarks-->
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Remarks"  type="text" name="day5comment" [(ngModel)]="project.day5.comment">
+                <mat-hint class="alert">
+                  <!-- <app-form-validator [control]="addProjectForm.controls.day1.controls"></app-form-validator> -->
+                </mat-hint>
+              </mat-form-field>
+            </td>
+
+            <td>
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Enter Hours:" [(ngModel)]="project.day6.hour" type="number" name="day6hour" value="0" (change)="updateTotal(project)">
+               
+              </mat-form-field>
+                <!--remarks-->
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Remarks"  type="text" name="day6comment" [(ngModel)]="project.day6.comment">
+                <mat-hint class="alert">
+                  <!-- <app-form-validator [control]="addProjectForm.controls.day1.controls"></app-form-validator> -->
+                </mat-hint>
+              </mat-form-field>
+            </td>
+
+            <td>
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Enter Hours:" [(ngModel)]="project.day7.hour" type="number" name="day7hour" value="0"  (change)="updateTotal(project)">
+               
+              </mat-form-field>
+                <!--remarks-->
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Remarks"  type="text" name="day7comment" [(ngModel)]="project.day7.comment">
+                <mat-hint class="alert">
+                  <!-- <app-form-validator [control]="addProjectForm.controls.day1.controls"></app-form-validator> -->
+                </mat-hint>
+              </mat-form-field>
+            </td>
+
+            <td>
+              <span style="margin:15px">{{project.totalHour}}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="divider"></div>
+
+      <mat-list-item>
+        <button mat-raised-button color="primary" mat-raised-button type="submit" (click)="onSubmit()" class="add-project-button">Submit</button>
+        <!-- <button mat-raised-button color="primary" mat-raised-button type="submit" [disabled]="addProjectForm.invalid" class="add-project-button">Submit</button> -->
+        <button mat-raised-button type="button" id="resetformButton" >Reset</button>
+      </mat-list-item>
+
+  
 </div>
 
-<div class="example-button-row">
-  <button mat-raised-button>Submit</button>
-</div>
 
-<div class="example-button-row">
-  <button mat-raised-button>Clear</button>
-</div>
+
