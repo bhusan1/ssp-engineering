@@ -18,7 +18,8 @@
   top: -70px;
   left: 0;
   right: 0;
-  background: #fff;
+  /* background: #fff; */
+  background: #f75a54;
   -webkit-transform: translateY(70px);
   -ms-transform: translateY(70px);
   transform: translateY(70px);
@@ -46,7 +47,7 @@
 }
 
 .main_menu_area {
-  background: #fff;
+  background: #f75a54;
   z-index: 30;
 }
 
@@ -120,7 +121,7 @@
 
 .main_menu_area .navbar.navbar-default .nav.navbar-nav.navbar-right li:hover a,
 .main_menu_area .navbar.navbar-default .nav.navbar-nav.navbar-right li.active a {
-  color: #cb3d39;
+  color: #f5f3f3;
 }
 
 .main_menu_area .navbar.navbar-default .nav.navbar-nav.navbar-right li.submenu {
@@ -236,4 +237,19 @@
 
 #logoutLink:hover {
   cursor: pointer;
+}
+
+.scrolling-word {
+  padding-top: 30px;
+  font-size: 10px;
+  font-family: "Lato", sans-serif;
+  font-weight: 1000;
+  color: #31353d;
+  transition: all 400ms linear 0s;
+  background: transparent;
+}
+
+.scroll-div {
+  top: 10px;
+  float: right;
 }

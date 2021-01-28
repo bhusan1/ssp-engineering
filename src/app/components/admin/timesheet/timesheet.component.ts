@@ -19,11 +19,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
   addProjectForm: FormGroup;
   parentTimesheetForm: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-    private firebaseService: FirebaseService,
-    private snackBar: MatSnackBar
-  ) {}
+  constructor(private fb: FormBuilder, private firebaseService: FirebaseService, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
     
@@ -168,7 +164,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
       .valueChanges()
       .subscribe((projectData: any[]) => {
         if (projectData) {       
-          
+           
           this.listofProjects = projectData;
         }
         
