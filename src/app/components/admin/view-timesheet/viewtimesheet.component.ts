@@ -58,7 +58,7 @@ export class ViewTimesheetComponent {
     }
     this.isLoading = true;
     this.firebaseService
-      .getFirestoreCollection('/timesheets')
+      .getFirestoreCollection('/timesheet')
       .ref.where('user', '==', this.selectedUser)
       .where('selectedWeek.startDate', '==', this.selectedWeek.startDate)
       .onSnapshot((snap) => {
@@ -113,7 +113,7 @@ export class ViewTimesheetComponent {
   getAllProjects() {
     this.isLoading = true;
     this.firebaseService
-      .getFirestoreCollection('/Projects')
+      .getFirestoreCollection('/projectList')
       .valueChanges()
       .subscribe((projectData: any[]) => {
         this.isLoading = false;

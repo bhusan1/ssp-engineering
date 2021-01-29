@@ -75,7 +75,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
     const data = timesheetId
       ? { timesheetId, updatedAt, ...this.parentTimesheetForm }
       : { timesheetId, createdAt, updatedAt, ...this.parentTimesheetForm };
-    const fbRef = "/timesheets/" + timesheetId.replace(/\s/g, "");
+    const fbRef = "/timesheet/" + timesheetId.replace(/\s/g, "");
     const msg = this.parentTimesheetForm.timesheetId ? "Timesheet Updated" : "Timesheet Added";
     if (this.parentTimesheetForm.timesheetId) {
       this.firebaseService.updateFirestoreDocument(fbRef, data).then(() => {
@@ -133,7 +133,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
   getAllProjects() {
     this.isLoading = true;
     this.firebaseService
-      .getFirestoreCollection('/Projects')
+      .getFirestoreCollection('/projectList')
       .valueChanges()
       .subscribe((projectData: any[]) => {
         this.isLoading = false;
@@ -148,7 +148,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
   getTimesheets() {
     this.isLoading = true;
     this.firebaseService
-      .getFirestoreCollection('/timesheets')
+      .getFirestoreCollection('/timesheet')
       .ref.where('user', '==', this.authService.currentUser.username)
       .where('selectedWeek.startDate', '==', this.selectedWeek.startDate)
       .onSnapshot((snap) => {
