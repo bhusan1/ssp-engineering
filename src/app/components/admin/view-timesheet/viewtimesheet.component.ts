@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { AuthService } from 'app/services/auth.service';
 import { FirebaseService } from 'app/services/firebase.service';
+import * as moment from "moment";
 
 @Component({
   selector: 'app-viewtimesheet',
@@ -14,29 +16,119 @@ export class ViewTimesheetComponent {
   noTimesheet = true;
   daysLabel: any;
   employeeName: string;
+  parentTimesheetForm: any;
+  days: any[];
+  totalWeeks: any[];
+  listofProjects: any[];
+  listofUser: any[];
+  selectedWeek: any;
+  selectedUser: any;
   
-  constructor(private firebaseService: FirebaseService) { }
+  constructor(private firebaseService: FirebaseService ) { }
 
   ngOnInit() {
-    this.getAllTimesheet();
+    this.parentTimesheetForm = {};
+    this.totalWeeks =  this.getWeeks();
     this.daysLabel = {};
+    this.getAllProjects();
+    this.getAllUers();
   }
 
+  onChangeofWeek(){
+    this.days =  this.getArrayOfDay(this.selectedWeek.startDate);
+    this.getTimesheets();
+     
+  }
 
-  getAllTimesheet() {
+  OnchangeOfUser(){
+    this.days =  this.getArrayOfDay(this.selectedWeek.startDate);
+    this.getTimesheets();
+  }
+
+  getTimesheets() {
+    if(!this.selectedUser && !this.selectedWeek){
+      return;
+    }
     this.firebaseService
       .getFirestoreCollection('/timesheets')
-      .valueChanges()
-      .subscribe((timesheetData: any[]) => {
-        if (timesheetData.length >0) {
-          this.noTimesheet = false;
-          this.employeeName = timesheetData[0].Username;
-          this.dataSource = new MatTableDataSource(timesheetData);
+      .ref.where('user', '==', this.selectedUser)
+      .where('selectedWeek.startDate', '==', this.selectedWeek.startDate)
+      .onSnapshot((snap) => {
+        if(snap.empty){
+          delete this.parentTimesheetForm.projects;
+          delete this.parentTimesheetForm.timesheetId
+          return;
         }
-        else {
-          this.noTimesheet = true;
-        }
+        snap.forEach(timesheetRef =>{
+          console.log("this is document >>",timesheetRef.data());
+          this.parentTimesheetForm = timesheetRef.data();        
+
+        })
+        
+        
       });
+  }
+
+  getArrayOfDay(startDate){
+    const currentDate = moment(startDate,'DD-MM-YYYY')
+    //const weekStart = currentDate.clone().startOf('week')
+
+    var days = [];
+    for (let i = 0; i <= 6; i++) {
+
+        days.push(moment(currentDate).add(i, 'days').format("MMMM Do,dddd"));
+
+
+    };
+
+  return days;
+    
+  }
+
+  getWeeks() {
+    var weeks = [];
+    var startDate = moment(new Date(2021, 0, 1)).isoWeekday(8);
+    if (startDate.date() == 8) {
+      startDate = startDate.isoWeekday(-6);
+    }
+    var today = moment().isoWeekday("Sunday");
+    while (startDate.isBefore(today)) {
+      let startDateWeek = startDate.isoWeekday("Monday").format("DD-MM-YYYY");
+      let endDateWeek = startDate.isoWeekday("Sunday").format("DD-MM-YYYY");
+      startDate.add(7, "days");
+      weeks.push({ startDate: startDateWeek, endDate: endDateWeek });
+    }
+    return weeks;
+  }
+
+  getAllProjects() {
+    this.firebaseService
+      .getFirestoreCollection('/Projects')
+      .valueChanges()
+      .subscribe((projectData: any[]) => {
+        if (projectData) {       
+          
+          this.listofProjects = projectData;
+        }
+        
+      });
+  }
+
+  getAllUers() {
+    this.firebaseService
+      .getFirestoreCollection('/users')
+      .valueChanges()
+      .subscribe((userData: any[]) => {
+        if (userData) {       
+          
+          this.listofUser = userData;
+        }
+        
+      });
+  }
+
+  getProjectName(projectid){
+    return (this.listofProjects.filter(obj=> obj.projectId === projectid)[0] || {}).title;
   }
   
 

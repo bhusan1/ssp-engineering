@@ -18,6 +18,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
   listofProjects:  any[];
   parentTimesheetForm: any;  
   isAddProjectValid = false;
+  currentUser: any;
 
   constructor(
     
@@ -32,6 +33,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
     this.parentTimesheetForm= {};
     this.totalWeeks =  this.getWeeks();
     this.getAllProjects();
+    this.currentUser = this.authService.currentUser;
     
   }
 
@@ -135,11 +137,17 @@ export class TimesheetComponent implements OnInit, OnChanges {
       .ref.where('user', '==', this.authService.currentUser.username)
       .where('selectedWeek.startDate', '==', this.parentTimesheetForm.selectedWeek.startDate)
       .onSnapshot((snap) => {
-        console.log()
+        if(snap.empty){
+          delete this.parentTimesheetForm.projects;
+          delete this.parentTimesheetForm.timesheetId;
+          this.buildForm(this.days);
+          return;
+        }
         snap.forEach(timesheetRef =>{
           console.log("this is document >>",timesheetRef.data());
           this.parentTimesheetForm = timesheetRef.data();
-          this.parentTimesheetForm.selectedWeek = this.getObjFrom(this.parentTimesheetForm)
+          this.parentTimesheetForm.selectedWeek = this.getObjFrom(this.parentTimesheetForm);         
+
         })
         
         
@@ -149,8 +157,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
   onChangeofWeek(){
     this.days =  this.getArrayOfDay(this.parentTimesheetForm.selectedWeek.startDate);
     this.getTimesheets();
-    this.buildForm(this.days);
-    
+    this.buildForm(this.days);    
   }
 
   getObjFrom(data){
