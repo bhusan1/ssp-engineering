@@ -4,17 +4,17 @@
       <mat-icon>menu</mat-icon>
     </button>
     <img src="../../../assets/images/SmallLogo.png" alt="" />
-    <p>User: Test</p>
+    <p>{{currentUser.firstName}} {{currentUser.lastName}}</p>
   </mat-toolbar>
 
   <mat-sidenav-container class="dashboard-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" opened>
       <mat-nav-list>
-        <a *ngIf="userAuthStatus" mat-list-item [routerLink]="[{ outlets: { sidebar: ['viewProjects'] } }]" mat-list-item>View Projects</a>
-        <a *ngIf="userAuthStatus" mat-list-item [routerLink]="[{ outlets: { sidebar: ['addProjects'] } }]" aria-selected mat-list-item>Add Projects</a>
-        <a *ngIf="userAuthStatus" mat-list-item [routerLink]="[{ outlets: { sidebar: ['viewServices'] } }]" mat-list-item mat-list-item>View Services</a>
-        <a *ngIf="userAuthStatus" mat-list-item [routerLink]="[{ outlets: { sidebar: ['addServices'] } }]" aria-selected mat-list-item>Add Services</a>
-        <a *ngIf="userAuthStatus" mat-list-item [routerLink]="[{ outlets: { sidebar: ['viewtimesheet'] } }]" aria-selected mat-list-item>View Timesheet</a>
+        <a *ngIf="userAuthStatus && currentUser.isAdmin" mat-list-item [routerLink]="[{ outlets: { sidebar: ['viewProjects'] } }]" mat-list-item>View Projects</a>
+        <a *ngIf="userAuthStatus && currentUser.isAdmin" mat-list-item [routerLink]="[{ outlets: { sidebar: ['addProjects'] } }]" aria-selected mat-list-item>Add Projects</a>
+        <a *ngIf="userAuthStatus && currentUser.isAdmin" mat-list-item [routerLink]="[{ outlets: { sidebar: ['viewServices'] } }]" mat-list-item mat-list-item>View Services</a>
+        <a *ngIf="userAuthStatus && currentUser.isAdmin" mat-list-item [routerLink]="[{ outlets: { sidebar: ['addServices'] } }]" aria-selected mat-list-item>Add Services</a>
+        <a *ngIf="userAuthStatus && currentUser.isAdmin" mat-list-item [routerLink]="[{ outlets: { sidebar: ['viewtimesheet'] } }]" aria-selected mat-list-item>View Timesheet</a>
         <a *ngIf="userAuthStatus" mat-list-item [routerLink]="[{ outlets: { sidebar: ['timesheet'] } }]" aria-selected mat-list-item>Timesheet</a>
 
         <a *ngIf="userAuthStatus" mat-list-item [routerLink]="[{ outlets: { sidebar: ['logout'] } }]">Logout</a>

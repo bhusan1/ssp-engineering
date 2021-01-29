@@ -45,7 +45,7 @@ export class AuthService {
               this.currentUser = userRef.data();
               console.log("User >>>>>",user)
               console.log("User >>>>",this.currentUser);
-              this.updateUserDataInFirestore(user);
+            //  this.updateUserDataInFirestore(user);
               // setUserStatus
               this.setUserStatus(this.currentUser);
               if (userRef.data().isAdmin) {
@@ -64,8 +64,7 @@ export class AuthService {
     this.afAuth.auth
       .signOut()
       .then(() => {
-        // set current user to null to be logged out
-        debugger;
+        // set current user to null to be logged ou
         this.currentUser = null;
         // set the listenener to be null, for the UI to react
         this.setUserStatus(null);
@@ -108,17 +107,17 @@ export class AuthService {
     });
   }
 
-  updateUserDataInFirestore(user: firebase.auth.UserCredential): void {
-    // this need to set at signup form
-    const userData = {
-      id: user.user.uid,
-      username: user.user.email,      
-      isAdmin: false
-    };
-    this.fbService.getFirestoreDocument('users', user.user.uid).then((userDataFromFirestore) => {
-      if (!userDataFromFirestore.exists) {
-        this.fbService.setFirestoreDocument('users/' + user.user.uid, userData);
-      }
-    });
-  }
+  // updateUserDataInFirestore(user: firebase.auth.UserCredential): void {
+  //   // this need to set at signup form
+  //   // const userData = {
+  //   //   id: user.user.uid,
+  //   //   username: user.user.email,      
+  //   //   isAdmin: false
+  //   // };
+  //   // this.fbService.getFirestoreDocument('users', user.user.uid).then((userDataFromFirestore) => {
+  //   //   if (!userDataFromFirestore.exists) {
+  //   //     this.fbService.setFirestoreDocument('users/' + user.user.uid, userData);
+  //   //   }
+  //   // });
+  // }
 }

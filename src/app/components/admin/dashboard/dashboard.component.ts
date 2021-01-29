@@ -10,6 +10,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   @Output() userAuthStatus = new EventEmitter<any>();
+  currentUser = {};
 
   constructor(public authService: AuthService, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
@@ -18,15 +19,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   userStatus = this.authService.userStatus;
+  
   mobileQuery: MediaQueryList;
 
   private _mobileQueryListener: () => void;
 
   ngOnInit() {
-    this.authService.userChanges();
+    this.authService.userChanges();    
     this.authService.userStatusChanges.subscribe((x) => {
       this.userStatus = x;
       this.userAuthStatus.emit(this.userStatus);
+      this.currentUser =  this.authService.currentUser;
     });
   }
 

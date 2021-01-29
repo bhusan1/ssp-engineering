@@ -41,6 +41,7 @@ import { MunicipalComponent } from './components/municipal/municipal.component';
 import { CommercialComponent } from './components/commercial/commercial.component';
 import { TimesheetComponent } from './components/admin/timesheet/timesheet.component';
 import { ViewTimesheetComponent } from './components/admin/view-timesheet/viewtimesheet.component';
+import { OptionFilter } from './pipe/optionFilter.pipe';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { ViewTimesheetComponent } from './components/admin/view-timesheet/viewti
     MunicipalComponent,
     CommercialComponent,
     TimesheetComponent,
-    ViewTimesheetComponent
+    ViewTimesheetComponent,
+    OptionFilter
   ],
   imports: [
     BrowserModule,
@@ -181,13 +183,8 @@ import { ViewTimesheetComponent } from './components/admin/view-timesheet/viewti
         children: [
           {
             path: '**',
-            redirectTo: '/userdashboard/(sidebar:viewtimesheet)',
+            redirectTo: '/userdashboard/(sidebar:timesheet)',
             pathMatch: 'full'
-          },
-          {
-            path: 'viewtimesheet',
-            component: ViewTimesheetComponent,
-            outlet: 'sidebar'
           },
           {
             path: 'timesheet',

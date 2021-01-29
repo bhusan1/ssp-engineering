@@ -3,6 +3,7 @@ import { FirebaseService } from "app/services/firebase.service";
 import { MatSnackBar } from "@angular/material";
 import * as moment from "moment";
 import { AuthService } from "app/services/auth.service";
+import { FilterInputWrapperComponent } from "@progress/kendo-angular-grid";
 
 @Component({
   selector: "app-timesheet",
@@ -18,7 +19,9 @@ export class TimesheetComponent implements OnInit, OnChanges {
   listofProjects:  any[];
   parentTimesheetForm: any;  
   isAddProjectValid = false;
-  currentUser: any;
+  currentUser={};
+  selectedWeek: any;
+  isLoading = false;
 
   constructor(
     
@@ -33,12 +36,18 @@ export class TimesheetComponent implements OnInit, OnChanges {
     this.parentTimesheetForm= {};
     this.totalWeeks =  this.getWeeks();
     this.getAllProjects();
-    this.currentUser = this.authService.currentUser;
+    this.isLoading = true;
+    this.authService.userStatusChanges.subscribe(()=>{
+      this.isLoading = false;
+      this.currentUser =  this.authService.currentUser;
+    })
+    
     
   }
 
   ngOnChanges() {
     //this.buildForm();
+    
   }
 
  
@@ -56,6 +65,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
   }
 
   addDataToFirebase(): void {
+    this.isLoading = true;
     const timesheetId = this.parentTimesheetForm.timesheetId
       ? this.parentTimesheetForm.timesheetId
       : this.firebaseService.createDocumentId();
@@ -69,10 +79,12 @@ export class TimesheetComponent implements OnInit, OnChanges {
     const msg = this.parentTimesheetForm.timesheetId ? "Timesheet Updated" : "Timesheet Added";
     if (this.parentTimesheetForm.timesheetId) {
       this.firebaseService.updateFirestoreDocument(fbRef, data).then(() => {
+        this.isLoading = false;
         this.showToast(msg);
       });
     } else {
       this.firebaseService.setFirestoreDocument(fbRef, data).then(() => {
+        this.isLoading = false;
         this.showToast(msg);
       });
     }
@@ -119,10 +131,12 @@ export class TimesheetComponent implements OnInit, OnChanges {
   }
 
   getAllProjects() {
+    this.isLoading = true;
     this.firebaseService
       .getFirestoreCollection('/Projects')
       .valueChanges()
       .subscribe((projectData: any[]) => {
+        this.isLoading = false;
         if (projectData) {       
           
           this.listofProjects = projectData;
@@ -132,11 +146,13 @@ export class TimesheetComponent implements OnInit, OnChanges {
   }
 
   getTimesheets() {
+    this.isLoading = true;
     this.firebaseService
       .getFirestoreCollection('/timesheets')
       .ref.where('user', '==', this.authService.currentUser.username)
-      .where('selectedWeek.startDate', '==', this.parentTimesheetForm.selectedWeek.startDate)
+      .where('selectedWeek.startDate', '==', this.selectedWeek.startDate)
       .onSnapshot((snap) => {
+        this.isLoading = false;
         if(snap.empty){
           delete this.parentTimesheetForm.projects;
           delete this.parentTimesheetForm.timesheetId;
@@ -145,8 +161,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
         }
         snap.forEach(timesheetRef =>{
           console.log("this is document >>",timesheetRef.data());
-          this.parentTimesheetForm = timesheetRef.data();
-          this.parentTimesheetForm.selectedWeek = this.getObjFrom(this.parentTimesheetForm);         
+          this.parentTimesheetForm = timesheetRef.data();                
 
         })
         
@@ -155,10 +170,12 @@ export class TimesheetComponent implements OnInit, OnChanges {
   }
 
   onChangeofWeek(){
-    this.days =  this.getArrayOfDay(this.parentTimesheetForm.selectedWeek.startDate);
+    this.days =  this.getArrayOfDay(this.selectedWeek.startDate);
     this.getTimesheets();
     this.buildForm(this.days);    
   }
+
+  
 
   getObjFrom(data){
     return this.totalWeeks.filter(obj=> obj.startDate == data.selectedWeek.startDate);
@@ -187,6 +204,10 @@ export class TimesheetComponent implements OnInit, OnChanges {
     }else{
       this.isAddProjectValid = false;
     }
+  }
+
+  getProjectList(project){
+    return this.listofProjects.filter(obj=> obj.projectId ==project && this.parentTimesheetForm.projects.indexOf(obj.projectId) !==-1 );
   }
 
 }

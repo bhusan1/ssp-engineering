@@ -23,8 +23,10 @@ export class ViewTimesheetComponent {
   listofUser: any[];
   selectedWeek: any;
   selectedUser: any;
+  isLoading= false;
+  currentUser:  any;
   
-  constructor(private firebaseService: FirebaseService ) { }
+  constructor(private firebaseService: FirebaseService , private authService: AuthService) { }
 
   ngOnInit() {
     this.parentTimesheetForm = {};
@@ -32,6 +34,11 @@ export class ViewTimesheetComponent {
     this.daysLabel = {};
     this.getAllProjects();
     this.getAllUers();
+    this.isLoading = true;
+    this.authService.userStatusChanges.subscribe(()=>{
+      this.isLoading = false;
+      this.currentUser =  this.authService.currentUser;
+    })
   }
 
   onChangeofWeek(){
@@ -49,11 +56,13 @@ export class ViewTimesheetComponent {
     if(!this.selectedUser && !this.selectedWeek){
       return;
     }
+    this.isLoading = true;
     this.firebaseService
       .getFirestoreCollection('/timesheets')
       .ref.where('user', '==', this.selectedUser)
       .where('selectedWeek.startDate', '==', this.selectedWeek.startDate)
       .onSnapshot((snap) => {
+        this.isLoading = false;
         if(snap.empty){
           delete this.parentTimesheetForm.projects;
           delete this.parentTimesheetForm.timesheetId
@@ -102,10 +111,12 @@ export class ViewTimesheetComponent {
   }
 
   getAllProjects() {
+    this.isLoading = true;
     this.firebaseService
       .getFirestoreCollection('/Projects')
       .valueChanges()
       .subscribe((projectData: any[]) => {
+        this.isLoading = false;
         if (projectData) {       
           
           this.listofProjects = projectData;
@@ -115,10 +126,12 @@ export class ViewTimesheetComponent {
   }
 
   getAllUers() {
+    this.isLoading = true;
     this.firebaseService
       .getFirestoreCollection('/users')
       .valueChanges()
       .subscribe((userData: any[]) => {
+        this.isLoading = false;
         if (userData) {       
           
           this.listofUser = userData;
