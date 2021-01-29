@@ -3,7 +3,7 @@ import { FirebaseService } from "app/services/firebase.service";
 import { MatSnackBar } from "@angular/material";
 import * as moment from "moment";
 import { AuthService } from "app/services/auth.service";
-import { FilterInputWrapperComponent } from "@progress/kendo-angular-grid";
+
 
 @Component({
   selector: "app-timesheet",

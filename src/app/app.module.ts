@@ -41,7 +41,7 @@ import { MunicipalComponent } from './components/municipal/municipal.component';
 import { CommercialComponent } from './components/commercial/commercial.component';
 import { TimesheetComponent } from './components/admin/timesheet/timesheet.component';
 import { ViewTimesheetComponent } from './components/admin/view-timesheet/viewtimesheet.component';
-import { OptionFilter } from './pipe/optionFilter.pipe';
+
 
 @NgModule({
   declarations: [
@@ -75,8 +75,7 @@ import { OptionFilter } from './pipe/optionFilter.pipe';
     MunicipalComponent,
     CommercialComponent,
     TimesheetComponent,
-    ViewTimesheetComponent,
-    OptionFilter
+    ViewTimesheetComponent
   ],
   imports: [
     BrowserModule,
