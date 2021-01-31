@@ -14,7 +14,7 @@
 
  
     <label>Choose Filter</label>
-    <mat-radio-group class="radio-group" aria-labelledby="select " class="example-radio-group" [(ngModel)]="filterType">
+    <mat-radio-group class="radio-group" (change)="radioChange()" aria-labelledby="select " class="example-radio-group" [(ngModel)]="filterType">
       <mat-radio-button class="radio-button" [value]="'project'">
         By Project Name
       </mat-radio-button>
@@ -55,46 +55,69 @@
 
     <tbody>
       <tr *ngFor="let project of parentTimesheetForm.projects">
-        <td class="boldClass">
+        <td  rowspan="2" class="boldClass">
           <mat-label>{{getProjectName(project.projectName)}}</mat-label>
         </td>
 
         <td>
           <mat-label>{{project.day1.hour}}</mat-label>
-          <mat-label>{{project.day1.comment}}</mat-label>
         </td>
 
         <td>
           <mat-label>{{project.day2.hour}}</mat-label>
-          <mat-label>{{project.day2.comment}}</mat-label>
         </td>
         <td>
           <mat-label>{{project.day3.hour}}</mat-label>
-          <mat-label>{{project.day3.comment}}</mat-label>
         </td>
 
         <td>
           <mat-label>{{project.day4.hour}}</mat-label>
-          <mat-label>{{project.day4.comment}}</mat-label>
         </td>
 
         <td>
           <mat-label>{{project.day5.hour}}</mat-label>
-          <mat-label>{{project.day5.comment}}</mat-label>
         </td>
         <td>
           <mat-label>{{project.day6.hour}}</mat-label>
-          <mat-label>{{project.day6.comment}}</mat-label>
         </td>
 
         <td>
           <mat-label>{{project.day7.hour}}</mat-label>
-          <mat-label>{{project.day7.comment}}</mat-label>
+          
+        </td>
+
+        <td rowspan="2">
+          <span style="margin:15px">{{project.totalHour}}</span>
+        </td>
+      </tr>
+      <tr *ngFor="let project of parentTimesheetForm.projects">        
+
+        <td>          
+          <mat-label>{{project.day1.comment}}</mat-label>
+        </td>
+
+        <td>          
+          <mat-label>{{project.day2.comment}}</mat-label>
+        </td>
+        <td>          
+          <mat-label>{{project.day3.comment}}</mat-label>
+        </td>
+
+        <td>          
+          <mat-label>{{project.day4.comment}}</mat-label>
         </td>
 
         <td>
-          <span style="margin:15px">{{project.totalHour}}</span>
+          <mat-label>{{project.day5.comment}}</mat-label>
         </td>
+        <td>          
+          <mat-label>{{project.day6.comment}}</mat-label>
+        </td>
+
+        <td>          
+          <mat-label>{{project.day7.comment}}</mat-label>
+        </td>
+        
       </tr>
     </tbody>
   </table>

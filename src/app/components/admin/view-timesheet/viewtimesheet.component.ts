@@ -168,6 +168,13 @@ export class ViewTimesheetComponent {
 
   }
 
+  radioChange()
+  {
+    this.selectedUser = null;
+    this.selectedProject = null;
+    this.parentTimesheetForm = {};
+  }
+
 
 }
 
