@@ -25,6 +25,8 @@ export class ViewTimesheetComponent {
   selectedUser: any;
   isLoading= false;
   currentUser:  any;
+  filterType: any;
+  selectedProject: String;
   
   constructor(private firebaseService: FirebaseService , private authService: AuthService) { }
 
@@ -43,23 +45,30 @@ export class ViewTimesheetComponent {
 
   onChangeofWeek(){
     this.days =  this.getArrayOfDay(this.selectedWeek.startDate);
-    this.getTimesheets();
+    if(this.selectedUser || this.selectedProject){
+      this.getTimesheets();
+    }   
      
   }
 
   OnchangeOfUser(){
     this.days =  this.getArrayOfDay(this.selectedWeek.startDate);
-    this.getTimesheets();
+    this.getTimesheets('user',this.selectedUser);
   }
 
-  getTimesheets() {
+  OnchangeOfProject(){
+    this.days =  this.getArrayOfDay(this.selectedWeek.startDate);
+    this.getTimesheets('projectName',this.selectedProject);
+  }
+
+  getTimesheets(key?,value?) {
     if(!this.selectedUser && !this.selectedWeek){
       return;
     }
     this.isLoading = true;
     this.firebaseService
       .getFirestoreCollection('/timesheet')
-      .ref.where('user', '==', this.selectedUser)
+      .ref.where(key || 'projectName', '==', value|| "")
       .where('selectedWeek.startDate', '==', this.selectedWeek.startDate)
       .onSnapshot((snap) => {
         this.isLoading = false;
