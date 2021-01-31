@@ -27,10 +27,12 @@
     "@progress/kendo-angular-grid": "^5.0.0",
     "@progress/kendo-angular-inputs": "^7.0.0",
     "core-js": "^2.5.4",
+    "file-saver": "^2.0.5",
     "firebase": "^6.1.0",
     "firebase-tools": "^9.1.0",
     "moment": "^2.29.1",
     "rxjs": "~6.2.0",
+    "xlsx": "^0.16.9",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {

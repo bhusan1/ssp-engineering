@@ -41,8 +41,10 @@
     </mat-select>
   </mat-form-field>
 
-
-  <table border="1" style="width:100%" *ngIf="parentTimesheetForm.selectedWeek">
+  <a style="cursor: pointer" *ngIf="selectedWeek && (selectedUser || selectedProject) && !!parentTimesheetForm && !isLoading" (click)="exportexcel()">
+    <mat-icon> cloud_download</mat-icon>
+  </a>
+  <table id="excel-table" border="1" style="width:100%" *ngIf="parentTimesheetForm.selectedWeek">
     <thead>
       <tr>
         <th style="width: 14%; text-align:center">Project </th>
