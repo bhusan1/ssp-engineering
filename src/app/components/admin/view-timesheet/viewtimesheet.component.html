@@ -12,8 +12,8 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field appearance="fill" *ngIf="">
-    <mat-label>Select User</mat-label>
+  <mat-form-field appearance="fill">
+    <mat-label>Select Project</mat-label>
     <mat-select [(ngModel)]="selectedUser" (selectionChange)="OnchangeOfUser()" required>
       <mat-option *ngFor="let user of listofUser" [value]="user.username">{{user.firstName}}  {{user.lastName}}</mat-option>
     </mat-select>

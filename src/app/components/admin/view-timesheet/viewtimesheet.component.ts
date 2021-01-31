@@ -79,7 +79,7 @@ export class ViewTimesheetComponent {
   }
 
   getArrayOfDay(startDate){
-    const currentDate = moment(startDate,'DD-MM-YYYY')
+    const currentDate = moment(startDate,"MM-DD-YYYY")
     //const weekStart = currentDate.clone().startOf('week')
 
     var days = [];
@@ -100,8 +100,8 @@ export class ViewTimesheetComponent {
     }
     var today = moment().isoWeekday("Sunday");
     while (startDate.isBefore(today)) {
-      let startDateWeek = startDate.isoWeekday("Monday").format("DD-MM-YYYY");
-      let endDateWeek = startDate.isoWeekday("Sunday").format("DD-MM-YYYY");
+      let startDateWeek = startDate.isoWeekday("Monday").format("MM-DD-YYYY");
+      let endDateWeek = startDate.isoWeekday("Sunday").format("MM-DD-YYYY");
       startDate.add(7, "days");
       weeks.push({ startDate: startDateWeek, endDate: endDateWeek });
     }
