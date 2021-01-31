@@ -12,6 +12,14 @@
     </mat-select>
   </mat-form-field>
 
+  <mat-form-field appearance="fill" *ngIf="">
+    <mat-label>Select User</mat-label>
+    <mat-select [(ngModel)]="selectedUser" (selectionChange)="OnchangeOfUser()" required>
+      <mat-option *ngFor="let user of listofUser" [value]="user.username">{{user.firstName}}  {{user.lastName}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
   <mat-form-field appearance="fill">
     <mat-label>Select User</mat-label>
     <mat-select [(ngModel)]="selectedUser" (selectionChange)="OnchangeOfUser()" required>
@@ -23,7 +31,7 @@
   <table border="1" style="width:100%" *ngIf="parentTimesheetForm.selectedWeek">
     <thead>
       <tr>
-        <th style="width: 25%; text-align:center">Project </th>
+        <th style="width: 14%; text-align:center">Project </th>
         <th style="width: 8%; text-align:center" *ngFor="let day of days">{{day}}</th>
         <th style="width: 15%; text-align:center">Total Hours</th>
       </tr>
@@ -31,7 +39,7 @@
 
     <tbody>
       <tr *ngFor="let project of parentTimesheetForm.projects">
-        <td>
+        <td class="boldClass">
           <mat-label>{{getProjectName(project.projectName)}}</mat-label>
         </td>
 

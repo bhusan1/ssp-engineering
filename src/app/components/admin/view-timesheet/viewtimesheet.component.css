@@ -75,3 +75,12 @@ p {
   .example-full-width {
     width: 100%;
   }
+
+  .boldClass {
+    font-weight: 700;
+    text-align: center;
+  }
+
+  td {
+    text-align: center;
+  }
