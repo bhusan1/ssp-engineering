@@ -72,11 +72,13 @@ export class TimesheetComponent implements OnInit, OnChanges {
     this.parentTimesheetForm.user = this.authService.currentUser.username;
     const createdAt = this.firebaseService.getFirestoreTimestamp();
     const updatedAt = this.firebaseService.getFirestoreTimestamp();
+    this.parentTimesheetForm.selectedWeek = this.selectedWeek;
     const data = timesheetId
       ? { timesheetId, updatedAt, ...this.parentTimesheetForm }
       : { timesheetId, createdAt, updatedAt, ...this.parentTimesheetForm };
     const fbRef = "/timesheet/" + timesheetId.replace(/\s/g, "");
     const msg = this.parentTimesheetForm.timesheetId ? "Timesheet Updated" : "Timesheet Added";
+    
     if (this.parentTimesheetForm.timesheetId) {
       this.firebaseService.updateFirestoreDocument(fbRef, data).then(() => {
         this.isLoading = false;
@@ -106,8 +108,8 @@ export class TimesheetComponent implements OnInit, OnChanges {
     }
     var today = moment().isoWeekday("Sunday");
     while (startDate.isBefore(today)) {
-      let startDateWeek = startDate.isoWeekday("Monday").format("DD-MM-YYYY");
-      let endDateWeek = startDate.isoWeekday("Sunday").format("DD-MM-YYYY");
+      let startDateWeek = startDate.isoWeekday("Monday").format("MM-DD-YYYY");
+      let endDateWeek = startDate.isoWeekday("Sunday").format("MM-DD-YYYY");
       startDate.add(7, "days");
       weeks.push({ startDate: startDateWeek, endDate: endDateWeek });
     }
@@ -115,7 +117,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
   }
 
   getArrayOfDay(startDate){
-    const currentDate = moment(startDate,'DD-MM-YYYY')
+    const currentDate = moment(startDate,"MM-DD-YYYY")
     //const weekStart = currentDate.clone().startOf('week')
 
     var days = [];
@@ -161,7 +163,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
         }
         snap.forEach(timesheetRef =>{
           console.log("this is document >>",timesheetRef.data());
-          this.parentTimesheetForm = timesheetRef.data();                
+          this.parentTimesheetForm = timesheetRef.data();               
 
         })
         

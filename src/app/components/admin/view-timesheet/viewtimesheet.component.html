@@ -1,29 +1,53 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
 <div class="mat-elevation-z8 customWidth">
-  <div>   
+  <div>
 
     <!--  Add Project button
                 View Older timesheet and edit -->
   </div>
   <mat-form-field appearance="fill">
     <mat-label>Select the Week</mat-label>
-    <mat-select [(ngModel)]="selectedWeek"  required>
+    <mat-select [(ngModel)]="selectedWeek" required>
       <mat-option *ngFor="let week of totalWeeks" [value]="week">{{week.startDate}}- {{week.endDate}}</mat-option>
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Select User</mat-label>
-    <mat-select [(ngModel)]="selectedUser" (selectionChange)="OnchangeOfUser()" required>
-      <mat-option *ngFor="let user of listofUser" [value]="user.username">{{user.firstName}}  {{user.lastName}}</mat-option>
+ 
+    <label>Choose Filter</label>
+    <mat-radio-group class="radio-group" aria-labelledby="select " class="example-radio-group" [(ngModel)]="filterType">
+      <mat-radio-button class="radio-button" [value]="'project'">
+        By Project Name
+      </mat-radio-button>
+      <mat-radio-button class="radio-button"  [value]="'user'">
+        By User
+      </mat-radio-button>
+    </mat-radio-group>
+  
+<br>
+  <mat-form-field appearance="fill" *ngIf="filterType == 'project'">
+    <mat-label>Select Project</mat-label>
+    <mat-select [(ngModel)]="selectedProject" (selectionChange)="OnchangeOfProject()" required>
+      <mat-option *ngFor="let project of listofProjects" [value]="project.projectId">{{project.title}}
+      </mat-option>
     </mat-select>
   </mat-form-field>
 
 
-  <table border="1" style="width:100%" *ngIf="parentTimesheetForm.selectedWeek">
+  <mat-form-field appearance="fill" *ngIf="filterType == 'user'">
+    <mat-label>Select User</mat-label>
+    <mat-select [(ngModel)]="selectedUser" (selectionChange)="OnchangeOfUser()" required>
+      <mat-option *ngFor="let user of listofUser" [value]="user.username">{{user.firstName}} {{user.lastName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <a style="cursor: pointer" *ngIf="selectedWeek && (selectedUser || selectedProject) && !!parentTimesheetForm && !isLoading" (click)="exportexcel()">
+    <mat-icon> cloud_download</mat-icon>
+  </a>
+  <table id="excel-table" border="1" style="width:100%" *ngIf="parentTimesheetForm.selectedWeek">
     <thead>
       <tr>
-        <th style="width: 25%; text-align:center">Project </th>
+        <th style="width: 14%; text-align:center">Project </th>
         <th style="width: 8%; text-align:center" *ngFor="let day of days">{{day}}</th>
         <th style="width: 15%; text-align:center">Total Hours</th>
       </tr>
@@ -31,7 +55,7 @@
 
     <tbody>
       <tr *ngFor="let project of parentTimesheetForm.projects">
-        <td>
+        <td class="boldClass">
           <mat-label>{{getProjectName(project.projectName)}}</mat-label>
         </td>
 

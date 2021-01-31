@@ -1,8 +1,9 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from 'app/services/auth.service';
 import { FirebaseService } from 'app/services/firebase.service';
 import * as moment from "moment";
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-viewtimesheet',
@@ -11,7 +12,7 @@ import * as moment from "moment";
 })
 export class ViewTimesheetComponent {
 
-  displayedColumns: string[] = ['projectid','startDate','endDate','day1','day2','day3','day4','day5','day6','day7','totalHour'];
+  displayedColumns: string[] = ['projectid', 'startDate', 'endDate', 'day1', 'day2', 'day3', 'day4', 'day5', 'day6', 'day7', 'totalHour'];
   dataSource: MatTableDataSource<any>;
   noTimesheet = true;
   daysLabel: any;
@@ -23,75 +24,82 @@ export class ViewTimesheetComponent {
   listofUser: any[];
   selectedWeek: any;
   selectedUser: any;
-  isLoading= false;
-  currentUser:  any;
-  
-  constructor(private firebaseService: FirebaseService , private authService: AuthService) { }
+  isLoading = false;
+  currentUser: any;
+  filterType: any;
+  selectedProject: String;
+
+  constructor(private firebaseService: FirebaseService, private authService: AuthService) { }
 
   ngOnInit() {
     this.parentTimesheetForm = {};
-    this.totalWeeks =  this.getWeeks();
+    this.totalWeeks = this.getWeeks();
     this.daysLabel = {};
     this.getAllProjects();
     this.getAllUers();
     this.isLoading = true;
-    this.authService.userStatusChanges.subscribe(()=>{
+    this.authService.userStatusChanges.subscribe(() => {
       this.isLoading = false;
-      this.currentUser =  this.authService.currentUser;
+      this.currentUser = this.authService.currentUser;
     })
   }
 
-  onChangeofWeek(){
-    this.days =  this.getArrayOfDay(this.selectedWeek.startDate);
-    this.getTimesheets();
-     
+  onChangeofWeek() {
+    this.days = this.getArrayOfDay(this.selectedWeek.startDate);
+    if (this.selectedUser || this.selectedProject) {
+      this.getTimesheets();
+    }
+
   }
 
-  OnchangeOfUser(){
-    this.days =  this.getArrayOfDay(this.selectedWeek.startDate);
-    this.getTimesheets();
+  OnchangeOfUser() {
+    this.days = this.getArrayOfDay(this.selectedWeek.startDate);
+    this.getTimesheets('user', this.selectedUser);
   }
 
-  getTimesheets() {
-    if(!this.selectedUser && !this.selectedWeek){
+  OnchangeOfProject() {
+    this.days = this.getArrayOfDay(this.selectedWeek.startDate);
+    this.getTimesheets('projectName', this.selectedProject);
+  }
+
+  getTimesheets(key?, value?) {
+    if (!this.selectedUser && !this.selectedWeek) {
       return;
     }
     this.isLoading = true;
     this.firebaseService
       .getFirestoreCollection('/timesheet')
-      .ref.where('user', '==', this.selectedUser)
+      .ref.where(key || 'projectName', '==', value || "")
       .where('selectedWeek.startDate', '==', this.selectedWeek.startDate)
       .onSnapshot((snap) => {
         this.isLoading = false;
-        if(snap.empty){
+        if (snap.empty) {
           delete this.parentTimesheetForm.projects;
           delete this.parentTimesheetForm.timesheetId
           return;
         }
-        snap.forEach(timesheetRef =>{
-          console.log("this is document >>",timesheetRef.data());
-          this.parentTimesheetForm = timesheetRef.data();        
+        snap.forEach(timesheetRef => {
+          console.log("this is document >>", timesheetRef.data());
+          this.parentTimesheetForm = timesheetRef.data();
 
         })
-        
-        
+
+
       });
   }
 
-  getArrayOfDay(startDate){
-    const currentDate = moment(startDate,'DD-MM-YYYY')
+  getArrayOfDay(startDate) {
+    const currentDate = moment(startDate, "MM-DD-YYYY")
     //const weekStart = currentDate.clone().startOf('week')
 
     var days = [];
     for (let i = 0; i <= 6; i++) {
 
-        days.push(moment(currentDate).add(i, 'days').format("MMMM Do,dddd"));
-
-
+      days.push(moment(currentDate).add(i, 'days').format("MMMM Do,dddd"));
     };
 
-  return days;
-    
+    return days;
+
   }
 
   getWeeks() {
@@ -102,8 +110,8 @@ export class ViewTimesheetComponent {
     }
     var today = moment().isoWeekday("Sunday");
     while (startDate.isBefore(today)) {
-      let startDateWeek = startDate.isoWeekday("Monday").format("DD-MM-YYYY");
-      let endDateWeek = startDate.isoWeekday("Sunday").format("DD-MM-YYYY");
+      let startDateWeek = startDate.isoWeekday("Monday").format("MM-DD-YYYY");
+      let endDateWeek = startDate.isoWeekday("Sunday").format("MM-DD-YYYY");
       startDate.add(7, "days");
       weeks.push({ startDate: startDateWeek, endDate: endDateWeek });
     }
@@ -117,11 +125,11 @@ export class ViewTimesheetComponent {
       .valueChanges()
       .subscribe((projectData: any[]) => {
         this.isLoading = false;
-        if (projectData) {       
-          
+        if (projectData) {
+
           this.listofProjects = projectData;
         }
-        
+
       });
   }
 
@@ -132,18 +140,34 @@ export class ViewTimesheetComponent {
       .valueChanges()
       .subscribe((userData: any[]) => {
         this.isLoading = false;
-        if (userData) {       
-          
+        if (userData) {
+
           this.listofUser = userData;
         }
-        
+
       });
   }
 
-  getProjectName(projectid){
-    return (this.listofProjects.filter(obj=> obj.projectId === projectid)[0] || {}).title;
+  getProjectName(projectid) {
+    return (this.listofProjects.filter(obj => obj.projectId === projectid)[0] || {}).title;
   }
-  
+
+  fileName = 'TimeSheetReports.xlsx';
+
+  exportexcel(): void {
+    /* table id is passed over here */
+    let element = document.getElementById('excel-table');
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'timesheet');
+
+    /* save to file */
+    XLSX.writeFile(wb, this.fileName);
+
+  }
+
 
 }
 
