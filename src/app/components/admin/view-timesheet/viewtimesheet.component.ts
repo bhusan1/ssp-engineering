@@ -86,8 +86,6 @@ export class ViewTimesheetComponent {
     for (let i = 0; i <= 6; i++) {
 
         days.push(moment(currentDate).add(i, 'days').format("MMMM Do,dddd"));
-
-
     };
 
   return days;

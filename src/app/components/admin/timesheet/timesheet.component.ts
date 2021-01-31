@@ -72,11 +72,13 @@ export class TimesheetComponent implements OnInit, OnChanges {
     this.parentTimesheetForm.user = this.authService.currentUser.username;
     const createdAt = this.firebaseService.getFirestoreTimestamp();
     const updatedAt = this.firebaseService.getFirestoreTimestamp();
+    this.parentTimesheetForm.selectedWeek = this.selectedWeek;
     const data = timesheetId
       ? { timesheetId, updatedAt, ...this.parentTimesheetForm }
       : { timesheetId, createdAt, updatedAt, ...this.parentTimesheetForm };
     const fbRef = "/timesheet/" + timesheetId.replace(/\s/g, "");
     const msg = this.parentTimesheetForm.timesheetId ? "Timesheet Updated" : "Timesheet Added";
+    
     if (this.parentTimesheetForm.timesheetId) {
       this.firebaseService.updateFirestoreDocument(fbRef, data).then(() => {
         this.isLoading = false;
@@ -161,7 +163,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
         }
         snap.forEach(timesheetRef =>{
           console.log("this is document >>",timesheetRef.data());
-          this.parentTimesheetForm = timesheetRef.data();                
+          this.parentTimesheetForm = timesheetRef.data();               
 
         })
         
