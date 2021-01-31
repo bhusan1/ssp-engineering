@@ -163,7 +163,8 @@ export class TimesheetComponent implements OnInit, OnChanges {
         }
         snap.forEach(timesheetRef =>{
           console.log("this is document >>",timesheetRef.data());
-          this.parentTimesheetForm = timesheetRef.data();               
+          this.parentTimesheetForm = timesheetRef.data();
+          this.isValidPreviousRecord();               
 
         })
         
