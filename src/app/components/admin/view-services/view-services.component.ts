@@ -46,7 +46,7 @@ export class ViewServicesComponent implements OnInit {
 
   getAllProjects() {
     this.firebaseService
-      .getFirestoreCollection('/services-test', ref => ref.where('serviceCategory', '==', 'industrial'))
+      .getFirestoreCollection('/services-test')
       .valueChanges()
       .subscribe(ServicesData => {
         if (ServicesData) {
