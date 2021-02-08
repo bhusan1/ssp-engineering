@@ -17,10 +17,12 @@ export class TimesheetComponent implements OnInit, OnChanges {
   totalWeeks: any[];
   days:  any[];
   listofProjects:  any[];
+  listofClient: any[];
   parentTimesheetForm: any;  
   isAddProjectValid = false;
   currentUser={};
   selectedWeek: any;
+  selectedClient: any;
   isLoading = false;
 
   constructor(
@@ -34,8 +36,8 @@ export class TimesheetComponent implements OnInit, OnChanges {
     
    // this.buildForm();
     this.parentTimesheetForm= {};
-    this.totalWeeks =  this.getWeeks();
-    this.getAllProjects();
+    this.totalWeeks =  this.getWeeks();    
+    this.getClients();
     this.isLoading = true;
     this.authService.userStatusChanges.subscribe(()=>{
       this.isLoading = false;
@@ -59,6 +61,15 @@ export class TimesheetComponent implements OnInit, OnChanges {
   buildForm(days:  any[]): void {   
    this.parentTimesheetForm.projects = this.parentTimesheetForm.projects || [{day1: {date: days[0]}, day2: {date: days[1]},day3: {date: days[2]},day4: {date: days[3]},day5: {date: days[4]}, day6: {date: days[5]}, day7:{date: days[6]}}];
   }
+  clearFormDays(project){
+    project.day1 = {};
+    project.day2 = {};
+    project.day3 = {};
+    project.day4 = {};
+    project.day5 = {};
+    project.day6 = {};
+    project.day7 = {};
+  }
 
   onSubmit(): void {
     this.addDataToFirebase();
@@ -73,6 +84,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
     const createdAt = this.firebaseService.getFirestoreTimestamp();
     const updatedAt = this.firebaseService.getFirestoreTimestamp();
     this.parentTimesheetForm.selectedWeek = this.selectedWeek;
+    this.parentTimesheetForm.clientId = this.selectedClient;
     const data = timesheetId
       ? { timesheetId, updatedAt, ...this.parentTimesheetForm }
       : { timesheetId, createdAt, updatedAt, ...this.parentTimesheetForm };
@@ -134,16 +146,35 @@ export class TimesheetComponent implements OnInit, OnChanges {
 
   getAllProjects() {
     this.isLoading = true;
+    this.listofProjects = [];
     this.firebaseService
       .getFirestoreCollection('/projectList')
-      .valueChanges()
-      .subscribe((projectData: any[]) => {
+      .ref.where('clientId', '==', this.selectedClient)
+      .onSnapshot((snap) => {
         this.isLoading = false;
-        if (projectData) {       
-          
-          this.listofProjects = projectData;
-        }
-        
+        if(snap.empty){
+          this.listofProjects = [];
+          delete this.parentTimesheetForm.projects;
+          return;
+        }        
+        snap.forEach(projectRef => {     
+          this.listofProjects.push(projectRef.data());
+          this.isValidPreviousRecord();
+        })
+        this.onChangeOfClientProject();
+      });     
+  }
+
+  getClients(){
+    this.isLoading = true;
+    this.firebaseService
+      .getFirestoreCollection('/clients')
+      .valueChanges()
+      .subscribe((client: any[]) => {
+        this.isLoading = false;
+        if (client) {
+          this.listofClient = client;
+        }        
       });
   }
 
@@ -152,6 +183,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
     this.firebaseService
       .getFirestoreCollection('/timesheet')
       .ref.where('user', '==', this.authService.currentUser.username)
+      .where('clientId', '==', this.selectedClient)
       .where('selectedWeek.startDate', '==', this.selectedWeek.startDate)
       .onSnapshot((snap) => {
         this.isLoading = false;
@@ -173,11 +205,31 @@ export class TimesheetComponent implements OnInit, OnChanges {
   }
 
   onChangeofWeek(){
+    if(!this.selectedWeek || !this.listofProjects.length){
+      return;
+    }
     this.days =  this.getArrayOfDay(this.selectedWeek.startDate);
     this.getTimesheets();
     this.buildForm(this.days);    
   }
 
+  onchangeOfClient(){
+    this.getAllProjects();
+   // this.onChangeOfClientProject();    
+  }
+
+  onProjectChange(project){
+    this.clearFormDays(project);
+  }
+
+  onChangeOfClientProject(){
+    if(!this.selectedWeek || !this.listofProjects.length){
+      return;
+    }
+    this.days =  this.getArrayOfDay(this.selectedWeek.startDate);
+    this.getTimesheets();
+    this.buildForm(this.days);    
+  }
   
 
   getObjFrom(data){
@@ -197,7 +249,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
 
   isValidPreviousRecord(){
     let flag = true;
-    this.parentTimesheetForm.projects.filter(obj => {
+    (this.parentTimesheetForm.projects|| []).filter(obj => {
       if(!obj.day1.hour || !obj.day2.hour || !obj.day3.hour || !obj.day4.hour || !obj.day5.hour || !obj.day6.hour || !obj.day7.hour){
         flag = false;
       }      

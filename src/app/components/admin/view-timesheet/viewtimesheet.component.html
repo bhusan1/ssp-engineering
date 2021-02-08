@@ -12,6 +12,14 @@
     </mat-select>
   </mat-form-field>
 
+  <mat-form-field appearance="fill" *ngIf="filterType == 'client'">
+    <mat-label>Select Client</mat-label>
+    <mat-select [(ngModel)]="selectedClient" (selectionChange)="OnchangeOfClient()" required>
+      <mat-option *ngFor="let client of listofClient" [value]="client.clientId">{{client.clientName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
  
     <label>Choose Filter</label>
     <mat-radio-group class="radio-group" (change)="radioChange()" aria-labelledby="select " class="example-radio-group" [(ngModel)]="filterType">
