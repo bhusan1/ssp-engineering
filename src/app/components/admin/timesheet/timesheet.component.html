@@ -6,14 +6,24 @@
               <!--  Add Project button
                   View Older timesheet and edit -->
     </div>
-      <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" style="margin:15px">
+      <mat-label>Select Client</mat-label>
+      <mat-select [(ngModel)]="selectedClient" (selectionChange)="onchangeOfClient()" required>
+        <mat-option *ngFor="let client of listofClient" [value]="client.clientId">{{client.clientName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+      <mat-form-field appearance="fill" >
         <mat-label>Select the Week</mat-label>
           <mat-select  [(ngModel)]="selectedWeek" (selectionChange)="onChangeofWeek()" required>  
           <mat-option *ngFor="let week of totalWeeks" [value]="week">{{week.startDate}}- {{week.endDate}}</mat-option>
         </mat-select>
       </mat-form-field>
 
-      <table border="1" style="width:100%" *ngIf="selectedWeek">
+      
+
+      <table border="1" style="width:100%" *ngIf="selectedWeek && parentTimesheetForm.projects">
         <thead>
           <tr>
             <th style="width: 25%; text-align:center">Project </th>
@@ -27,7 +37,7 @@
             <td >
               <mat-form-field appearance="fill">
                 <mat-label>Select Project</mat-label>
-                <mat-select  [(ngModel)]="project.projectName" required >
+                <mat-select  [(ngModel)]="project.projectName" required (selectionChange)="onProjectChange(project)">
                   <mat-option *ngFor="let item of listofProjects" [value]="item.projectId">{{item.title}}</mat-option>
                 </mat-select>
               </mat-form-field>
@@ -141,8 +151,8 @@
       <div class="divider"></div>
 
       <mat-list-item>
-        <button mat-raised-button type="button" id="addNewProject" *ngIf="selectedWeek && isAddProjectValid" (click)="addNewProject()" >Add new Project</button>
-        <button mat-raised-button color="primary" mat-raised-button [disabled]="!selectedWeek || !isAddProjectValid" type="submit" (click)="onSubmit()" class="add-project-button">Submit</button>
+        <button mat-raised-button type="button" id="addNewProject" *ngIf="selectedWeek && isAddProjectValid && parentTimesheetForm.projects" (click)="addNewProject()" >Add new Project</button>
+        <button mat-raised-button color="primary" mat-raised-button [disabled]="!selectedWeek || !isAddProjectValid || !parentTimesheetForm.projects" type="submit" (click)="onSubmit()" class="add-project-button">Submit</button>
         <!-- <button mat-raised-button color="primary" mat-raised-button type="submit" [disabled]="addProjectForm.invalid" class="add-project-button">Submit</button> -->
         <button mat-raised-button type="button" id="resetformButton" >Reset</button>
       </mat-list-item>
