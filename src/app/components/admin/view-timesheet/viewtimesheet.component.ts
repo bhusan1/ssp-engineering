@@ -22,6 +22,7 @@ export class ViewTimesheetComponent {
   totalWeeks: any[];
   listofProjects: any[];
   listofUser: any[];
+  listofClient:  any[];
   selectedWeek: any;
   selectedUser: any;
   isLoading = false;
@@ -37,6 +38,7 @@ export class ViewTimesheetComponent {
     this.daysLabel = {};
     this.getAllProjects();
     this.getAllUers();
+    this.getClients();
     this.isLoading = true;
     this.authService.userStatusChanges.subscribe(() => {
       this.isLoading = false;
@@ -55,6 +57,19 @@ export class ViewTimesheetComponent {
   OnchangeOfUser() {
     this.days = this.getArrayOfDay(this.selectedWeek.startDate);
     this.getTimesheets('user', this.selectedUser);
+  }
+
+  getClients(){
+    this.isLoading = true;
+    this.firebaseService
+      .getFirestoreCollection('/clients')
+      .valueChanges()
+      .subscribe((client: any[]) => {
+        this.isLoading = false;
+        if (client) {
+          this.listofClient = client;
+        }        
+      });
   }
 
   OnchangeOfProject() {
