@@ -26,7 +26,7 @@
 <div *ngIf="filterType == 'project'">
 <mat-form-field appearance="fill" >
   <mat-label>Select Client</mat-label>
-  <mat-select [(ngModel)]="selectedClient" (selectionChange)="OnchangeOfClient()" required>
+  <mat-select [(ngModel)]="selectedClient" (selectionChange)="OnchangeOfClient(selectedClient)" required>
     <mat-option *ngFor="let client of listofClient" [value]="client.clientId">{{client.clientName}}
     </mat-option>
   </mat-select>

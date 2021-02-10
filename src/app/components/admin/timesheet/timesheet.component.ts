@@ -38,6 +38,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
     this.parentTimesheetForm= {};
     this.totalWeeks =  this.getWeeks();    
     this.getClients();
+    this.getAllProjects();
     this.isLoading = true;
     this.authService.userStatusChanges.subscribe(()=>{
       this.isLoading = false;
@@ -62,6 +63,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
    this.parentTimesheetForm.projects = this.parentTimesheetForm.projects || [{day1: {date: days[0]}, day2: {date: days[1]},day3: {date: days[2]},day4: {date: days[3]},day5: {date: days[4]}, day6: {date: days[5]}, day7:{date: days[6]}}];
   }
   clearFormDays(project){
+    delete project.projectName;
     project.day1 = {};
     project.day2 = {};
     project.day3 = {};
@@ -84,7 +86,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
     const createdAt = this.firebaseService.getFirestoreTimestamp();
     const updatedAt = this.firebaseService.getFirestoreTimestamp();
     this.parentTimesheetForm.selectedWeek = this.selectedWeek;
-    this.parentTimesheetForm.clientId = this.selectedClient;
+    //this.parentTimesheetForm.clientId = this.selectedClient;
     const data = timesheetId
       ? { timesheetId, updatedAt, ...this.parentTimesheetForm }
       : { timesheetId, createdAt, updatedAt, ...this.parentTimesheetForm };
@@ -144,25 +146,22 @@ export class TimesheetComponent implements OnInit, OnChanges {
     
   }
 
+  getProjectByClientId(clientId){
+    return this.listofProjects.filter(obj => obj.clientId == clientId);
+  }
+
   getAllProjects() {
     this.isLoading = true;
     this.listofProjects = [];
     this.firebaseService
       .getFirestoreCollection('/projectList')
-      .ref.where('clientId', '==', this.selectedClient)
-      .onSnapshot((snap) => {
+      .valueChanges()
+      .subscribe((projectList: any[]) => {
         this.isLoading = false;
-        if(snap.empty){
-          this.listofProjects = [];
-          delete this.parentTimesheetForm.projects;
-          return;
+        if (projectList.length) {
+          this.listofProjects = projectList;
         }        
-        snap.forEach(projectRef => {     
-          this.listofProjects.push(projectRef.data());
-          this.isValidPreviousRecord();
-        })
-        this.onChangeOfClientProject();
-      });     
+      }); 
   }
 
   getClients(){
@@ -183,21 +182,17 @@ export class TimesheetComponent implements OnInit, OnChanges {
     this.firebaseService
       .getFirestoreCollection('/timesheet')
       .ref.where('user', '==', this.authService.currentUser.username)
-      .where('clientId', '==', this.selectedClient)
       .where('selectedWeek.startDate', '==', this.selectedWeek.startDate)
       .onSnapshot((snap) => {
         this.isLoading = false;
-        if(snap.empty){
-          delete this.parentTimesheetForm.projects;
-          delete this.parentTimesheetForm.timesheetId;
+        if(snap.empty){         
           this.buildForm(this.days);
           return;
         }
         snap.forEach(timesheetRef =>{
           console.log("this is document >>",timesheetRef.data());
           this.parentTimesheetForm = timesheetRef.data();
-          this.isValidPreviousRecord();               
-
+          this.isValidPreviousRecord();
         })
         
         
@@ -205,7 +200,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
   }
 
   onChangeofWeek(){
-    if(!this.selectedWeek || !this.listofProjects.length){
+    if(!this.selectedWeek){
       return;
     }
     this.days =  this.getArrayOfDay(this.selectedWeek.startDate);
@@ -214,7 +209,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
   }
 
   onchangeOfClient(){
-    this.getAllProjects();
+    this.getAllProjects();    
    // this.onChangeOfClientProject();    
   }
 
@@ -223,7 +218,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
   }
 
   onChangeOfClientProject(){
-    if(!this.selectedWeek || !this.listofProjects.length){
+    if(!this.selectedWeek){
       return;
     }
     this.days =  this.getArrayOfDay(this.selectedWeek.startDate);
@@ -264,5 +259,9 @@ export class TimesheetComponent implements OnInit, OnChanges {
   getProjectList(project){
     return this.listofProjects.filter(obj=> obj.projectId ==project && this.parentTimesheetForm.projects.indexOf(obj.projectId) !==-1 );
   }
+
+  // getProjectIdByProjectName(project){
+  //     project.projectId = this.listofProjects.filter(obj => obj.projectName === project.projectName)[0].projectId;
+  // }
 
 }
