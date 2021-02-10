@@ -172,17 +172,9 @@ export class TimesheetComponent implements OnInit, OnChanges {
       .valueChanges()
       .subscribe((client: any[]) => {
         this.isLoading = false;
-<<<<<<< HEAD
-        if (projectData) {       
-           
-          this.listofProjects = projectData;
-        }
-        
-=======
         if (client) {
           this.listofClient = client;
         }        
->>>>>>> 23e175327c48f1e12f8d25160e20a5abbad1f389
       });
   }
 
