@@ -22,6 +22,7 @@ export class ViewTimesheetComponent {
   totalWeeks: any[];
   listofProjects: any[];
   listofUser: any[];
+  listofClient:  any[];
   selectedWeek: any;
   selectedUser: any;
   isLoading = false;
@@ -34,10 +35,11 @@ export class ViewTimesheetComponent {
   ngOnInit() {
     this.parentTimesheetForm = {};
     this.totalWeeks = this.getWeeks();
-    this.daysLabel = {};
-    this.getAllProjects();
+    this.daysLabel = {};    
     this.getAllUers();
+    this.getClients();
     this.isLoading = true;
+    this.listofProjects = [];
     this.authService.userStatusChanges.subscribe(() => {
       this.isLoading = false;
       this.currentUser = this.authService.currentUser;
@@ -55,6 +57,24 @@ export class ViewTimesheetComponent {
   OnchangeOfUser() {
     this.days = this.getArrayOfDay(this.selectedWeek.startDate);
     this.getTimesheets('user', this.selectedUser);
+  }
+
+  OnchangeOfClient(clientId){
+    this.getAllProjects(clientId);
+    this.getTimesheetByProjectIdAndClientId(clientId);
+  }
+
+  getClients(){
+    this.isLoading = true;
+    this.firebaseService
+      .getFirestoreCollection('/clients')
+      .valueChanges()
+      .subscribe((client: any[]) => {
+        this.isLoading = false;
+        if (client) {
+          this.listofClient = client;
+        }        
+      });
   }
 
   OnchangeOfProject() {
@@ -118,17 +138,20 @@ export class ViewTimesheetComponent {
     return weeks;
   }
 
-  getAllProjects() {
+  getAllProjects(clientId) {
     this.isLoading = true;
     this.firebaseService
       .getFirestoreCollection('/projectList')
-      .valueChanges()
-      .subscribe((projectData: any[]) => {
+      .ref.where('clientId', '==', clientId)
+      .onSnapshot((snap) => {
         this.isLoading = false;
-        if (projectData) {
-
-          this.listofProjects = projectData;
-        }
+        if(snap.empty){
+          this.listofProjects = [];          
+          return;
+        }        
+        snap.forEach(projectRef => {     
+          this.listofProjects.push(projectRef.data());          
+        })
 
       });
   }
@@ -173,6 +196,31 @@ export class ViewTimesheetComponent {
     this.selectedUser = null;
     this.selectedProject = null;
     this.parentTimesheetForm = {};
+  }
+
+  getTimesheetByProjectIdAndClientId(clientId){
+    if (!this.selectedWeek) {
+      return;
+    }
+    this.isLoading = true;
+    this.firebaseService
+      .getFirestoreCollection('/timesheet')
+      .ref.where('selectedWeek.startDate', '==', this.selectedWeek.startDate)
+      .onSnapshot((snap) => {
+        this.isLoading = false;
+        if (snap.empty) {
+          delete this.parentTimesheetForm.projects;
+          delete this.parentTimesheetForm.timesheetId
+          return;
+        }
+        snap.forEach(timesheetRef => {
+          console.log("this is document >>", timesheetRef.data());
+          this.parentTimesheetForm = timesheetRef.data();
+
+        })
+
+
+      });
   }
 
 

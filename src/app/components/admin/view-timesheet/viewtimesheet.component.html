@@ -7,20 +7,11 @@
   </div>
   <mat-form-field appearance="fill">
     <mat-label>Select the Week</mat-label>
-    <mat-select [(ngModel)]="selectedWeek" required>
+    <mat-select [(ngModel)]="selectedWeek" required (selectionChange)="OnchangeOfUser()">
       <mat-option *ngFor="let week of totalWeeks" [value]="week">{{week.startDate}}- {{week.endDate}}</mat-option>
     </mat-select>
   </mat-form-field>
-
-  <mat-form-field appearance="fill" *ngIf="filterType == 'client'">
-    <mat-label>Select Client</mat-label>
-    <mat-select [(ngModel)]="selectedClient" (selectionChange)="OnchangeOfClient()" required>
-      <mat-option *ngFor="let client of listofClient" [value]="client.clientId">{{client.clientName}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
- 
+   
     <label>Choose Filter</label>
     <mat-radio-group class="radio-group" (change)="radioChange()" aria-labelledby="select " class="example-radio-group" [(ngModel)]="filterType">
       <mat-radio-button class="radio-button" [value]="'project'">
@@ -32,15 +23,25 @@
     </mat-radio-group>
   
 <br>
-  <mat-form-field appearance="fill" *ngIf="filterType == 'project'">
+<div *ngIf="filterType == 'project'">
+<mat-form-field appearance="fill" >
+  <mat-label>Select Client</mat-label>
+  <mat-select [(ngModel)]="selectedClient" (selectionChange)="OnchangeOfClient(selectedClient)" required>
+    <mat-option *ngFor="let client of listofClient" [value]="client.clientId">{{client.clientName}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+ 
+  <mat-form-field appearance="fill" *ngIf="!!selectedClient" style="margin:15px">
     <mat-label>Select Project</mat-label>
     <mat-select [(ngModel)]="selectedProject" (selectionChange)="OnchangeOfProject()" required>
+      <mat-option [value]="1">None</mat-option>
       <mat-option *ngFor="let project of listofProjects" [value]="project.projectId">{{project.title}}
       </mat-option>
     </mat-select>
   </mat-form-field>
 
-
+</div>
   <mat-form-field appearance="fill" *ngIf="filterType == 'user'">
     <mat-label>Select User</mat-label>
     <mat-select [(ngModel)]="selectedUser" (selectionChange)="OnchangeOfUser()" required>

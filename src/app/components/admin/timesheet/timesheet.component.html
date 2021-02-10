@@ -2,18 +2,7 @@
 <div class="mat-elevation-z8 customWidth"> 
     <div>
         <label>Employee Name :  {{currentUser.firstName}}- {{currentUser.lastName}}</label>
-
-              <!--  Add Project button
-                  View Older timesheet and edit -->
-    </div>
-    <mat-form-field appearance="fill" style="margin:15px">
-      <mat-label>Select Client</mat-label>
-      <mat-select [(ngModel)]="selectedClient" (selectionChange)="onchangeOfClient()" required>
-        <mat-option *ngFor="let client of listofClient" [value]="client.clientId">{{client.clientName}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
+    </div>    
       <mat-form-field appearance="fill" >
         <mat-label>Select the Week</mat-label>
           <mat-select  [(ngModel)]="selectedWeek" (selectionChange)="onChangeofWeek()" required>  
@@ -26,7 +15,8 @@
       <table border="1" style="width:100%" *ngIf="selectedWeek && parentTimesheetForm.projects">
         <thead>
           <tr>
-            <th style="width: 25%; text-align:center">Project </th>
+            <th style="width: 12.5%; text-align:center">Client </th>
+            <th style="width: 13.5%; text-align:center">Project </th>
             <th style="width: 8%; text-align:center" *ngFor="let day of days">{{day}}</th>        
             <th style="width: 15%; text-align:center">Total Hours</th>
           </tr>
@@ -34,11 +24,22 @@
 
         <tbody>
           <tr *ngFor="let project of parentTimesheetForm.projects">
+            <td>
+              <mat-form-field appearance="fill" style="margin:15px">
+                <mat-label>Select Client</mat-label>
+                <mat-select [(ngModel)]="project.clientId" (selectionChange)="onchangeOfClient(project)" required>
+                  <mat-option *ngFor="let client of listofClient" [value]="client.clientId">{{client.clientName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+          
+            </td>
+            
             <td >
               <mat-form-field appearance="fill">
                 <mat-label>Select Project</mat-label>
                 <mat-select  [(ngModel)]="project.projectName" required (selectionChange)="onProjectChange(project)">
-                  <mat-option *ngFor="let item of listofProjects" [value]="item.projectId">{{item.title}}</mat-option>
+                  <mat-option *ngFor="let item of getProjectByClientId(project.clientId)" [value]="item.projectId">{{item.title}}</mat-option>
                 </mat-select>
               </mat-form-field>
             </td>
