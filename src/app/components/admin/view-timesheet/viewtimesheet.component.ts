@@ -29,6 +29,8 @@ export class ViewTimesheetComponent {
   currentUser: any;
   filterType: any;
   selectedProject: String;
+  selectedClient: any;
+
 
   constructor(private firebaseService: FirebaseService, private authService: AuthService) { }
 
@@ -61,7 +63,7 @@ export class ViewTimesheetComponent {
 
   OnchangeOfClient(clientId){
     this.getAllProjects(clientId);
-    this.getTimesheetByProjectIdAndClientId(clientId);
+    this.getTimesheetByProjectIdAndClientId();
   }
 
   getClients(){
@@ -79,7 +81,7 @@ export class ViewTimesheetComponent {
 
   OnchangeOfProject() {
     this.days = this.getArrayOfDay(this.selectedWeek.startDate);
-    this.getTimesheets('projectName', this.selectedProject);
+    this.getTimesheetByProjectIdAndClientId();
   }
 
   getTimesheets(key?, value?) {
@@ -198,7 +200,7 @@ export class ViewTimesheetComponent {
     this.parentTimesheetForm = {};
   }
 
-  getTimesheetByProjectIdAndClientId(clientId){
+  getTimesheetByProjectIdAndClientId(){
     if (!this.selectedWeek) {
       return;
     }
@@ -216,11 +218,27 @@ export class ViewTimesheetComponent {
         snap.forEach(timesheetRef => {
           console.log("this is document >>", timesheetRef.data());
           this.parentTimesheetForm = timesheetRef.data();
+          this._getFilterByclientIdAndProjectId();
 
         })
 
 
       });
+  }
+
+  _getFilterByclientIdAndProjectId(){
+    this.parentTimesheetForm.projects = (this.parentTimesheetForm.projects || []).filter(obj => {
+      if(this.selectedClient && this.selectedProject){
+        if(obj.clientId == this.selectedClient && obj.projectName == this.selectedProject){
+          return true;
+        }
+      }else if(this.selectedClient || this.selectedProject == "1"){
+        if(obj.clientId == this.selectedClient){
+          return true;
+        }
+      }
+      return false;
+    })
   }
 
 
