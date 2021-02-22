@@ -59,19 +59,11 @@ export class TimesheetComponent implements OnInit, OnChanges {
     
   }
 
-  buildForm(days:  any[]): void {   
-   this.parentTimesheetForm.projects = this.parentTimesheetForm.projects || [{day1: {date: days[0]}, day2: {date: days[1]},day3: {date: days[2]},day4: {date: days[3]},day5: {date: days[4]}, day6: {date: days[5]}, day7:{date: days[6]}}];
-  }
-  clearFormDays(project){
-    delete project.projectName;
-    project.day1 = {};
-    project.day2 = {};
-    project.day3 = {};
-    project.day4 = {};
-    project.day5 = {};
-    project.day6 = {};
-    project.day7 = {};
-  }
+  buildForm(days:  any[], force: boolean): void {   
+    if(force || !this.parentTimesheetForm.projects.length){
+      this.parentTimesheetForm.projects = [{day1: {date: days[0]}, day2: {date: days[1]},day3: {date: days[2]},day4: {date: days[3]},day5: {date: days[4]}, day6: {date: days[5]}, day7:{date: days[6]}}];
+    }  
+  } 
 
   onSubmit(): void {
     this.addDataToFirebase();
@@ -160,7 +152,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
         this.isLoading = false;
         if (projectList.length) {
           this.listofProjects = projectList;
-        }        
+        }      
       }); 
   }
 
@@ -186,7 +178,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
       .onSnapshot((snap) => {
         this.isLoading = false;
         if(snap.empty){         
-          this.buildForm(this.days);
+          this.buildForm(this.days, true);
           return;
         }
         snap.forEach(timesheetRef =>{
@@ -205,16 +197,12 @@ export class TimesheetComponent implements OnInit, OnChanges {
     }
     this.days =  this.getArrayOfDay(this.selectedWeek.startDate);
     this.getTimesheets();
-    this.buildForm(this.days);    
+    this.buildForm(this.days, false);    
   }
 
   onchangeOfClient(){
     this.getAllProjects();    
    // this.onChangeOfClientProject();    
-  }
-
-  onProjectChange(project){
-    this.clearFormDays(project);
   }
 
   onChangeOfClientProject(){
@@ -223,7 +211,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
     }
     this.days =  this.getArrayOfDay(this.selectedWeek.startDate);
     this.getTimesheets();
-    this.buildForm(this.days);    
+    this.buildForm(this.days, false);    
   }
   
 

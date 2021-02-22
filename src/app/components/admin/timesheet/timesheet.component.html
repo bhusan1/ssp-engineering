@@ -38,7 +38,7 @@
             <td >
               <mat-form-field appearance="fill">
                 <mat-label>Select Project</mat-label>
-                <mat-select  [(ngModel)]="project.projectName" required (selectionChange)="onProjectChange(project)">
+                <mat-select  [(ngModel)]="project.projectName" required >
                   <mat-option *ngFor="let item of getProjectByClientId(project.clientId)" [value]="item.projectId">{{item.title}}</mat-option>
                 </mat-select>
               </mat-form-field>
