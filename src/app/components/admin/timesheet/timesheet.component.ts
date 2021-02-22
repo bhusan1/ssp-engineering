@@ -60,7 +60,8 @@ export class TimesheetComponent implements OnInit, OnChanges {
   }
 
   buildForm(days:  any[], force: boolean): void {   
-    if(force || !this.parentTimesheetForm.projects.length){
+    if(force || !(this.parentTimesheetForm.projects && this.parentTimesheetForm.projects.length)){
+      this.parentTimesheetForm = {};
       this.parentTimesheetForm.projects = [{day1: {date: days[0]}, day2: {date: days[1]},day3: {date: days[2]},day4: {date: days[3]},day5: {date: days[4]}, day6: {date: days[5]}, day7:{date: days[6]}}];
     }  
   } 
