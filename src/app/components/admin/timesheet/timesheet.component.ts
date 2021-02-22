@@ -153,6 +153,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
         this.isLoading = false;
         if (projectList.length) {
           this.listofProjects = projectList;
+          this.onChangeofWeek();
         }      
       }); 
   }
@@ -202,7 +203,9 @@ export class TimesheetComponent implements OnInit, OnChanges {
   }
 
   onchangeOfClient(){
-    this.getAllProjects();    
+
+    this.getAllProjects();  
+
    // this.onChangeOfClientProject();    
   }
 

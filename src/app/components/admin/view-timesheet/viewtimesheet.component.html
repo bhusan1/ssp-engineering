@@ -57,87 +57,95 @@
     <thead>
       <tr>
         <th style="width: 14%; text-align:center">Project </th>
+        <th style="width: 14%; text-align:center" *ngIf="selectedUser">Client Name </th>
         <th style="width: 8%; text-align:center" *ngFor="let day of days">{{day}}</th>
         <th style="width: 15%; text-align:center">Total Hours</th>
       </tr>
     </thead>
 
     <tbody>
-      <tr *ngFor="let project of parentTimesheetForm.projects">
-        <td  class="boldClass" rowspan="2">
-          <mat-label>{{getProjectName(project.projectName)}}</mat-label>
+      <tr *ngFor="let project of parentTimesheetForm.projects; let even = even; let odd = odd">
+        <td  class="boldClass">
+          <mat-label>{{getProjectName(project.projectName)}}</mat-label>         
         </td>
 
+        <td  class="boldClass" rowspan="2" *ngIf="selectedUser">
+          <mat-label>{{getClientName(project.clientId)}}</mat-label>
+        </td>
+        
         <td>
           <mat-label>{{project.day1.hour}}</mat-label><br>
-          <!-- <mat-label>&nbsp; {{project.day1.comment}}</mat-label> -->
+          <div class="divider"></div>
+          <mat-label>&nbsp; {{project.day1.comment}}</mat-label> 
         </td>
+        <!-- <td *ngIf="even">          
+          <mat-label>&nbsp; {{project.day1.comment}}</mat-label>
+        </td> -->
+
+        <td >
+          <mat-label>{{project.day2.hour}}</mat-label><br>
+          <div class="divider"></div>
+          <mat-label>&nbsp; {{project.day2.comment}}</mat-label>
+        </td>
+        <!-- <td *ngIf="even">          
+          <mat-label>&nbsp; {{project.day2.comment}}</mat-label>
+        </td> -->
+
 
         <td>
-          <mat-label>{{project.day2.hour}}</mat-label><br>
-          <!-- <mat-label>&nbsp; {{project.day2.comment}}</mat-label> -->
-        </td>
-        <td>
           <mat-label>{{project.day3.hour}}</mat-label><br>
-          <!-- <mat-label>&nbsp; {{project.day3.comment}}</mat-label> -->
+          <div class="divider"></div>
+          <mat-label>&nbsp; {{project.day3.comment}}</mat-label>
         </td>
+
+        <!-- <td *ngIf="even">          
+          <mat-label>&nbsp; {{project.day3.comment}}</mat-label>
+        </td> -->
 
         <td>
           <mat-label>{{project.day4.hour}}</mat-label><br>
-          <!-- <mat-label>&nbsp; {{project.day4.comment}}</mat-label> -->
+          <div class="divider"></div>
+          <mat-label>&nbsp; {{project.day4.comment}}</mat-label>
         </td>
+        <!-- <td *ngIf="even">          
+          <mat-label>&nbsp; {{project.day4.comment}}</mat-label>
+        </td> -->
+
+        <td >
+          <mat-label>{{project.day5.hour}}</mat-label><br>
+          <div class="divider"></div>
+          <mat-label>&nbsp; {{project.day5.comment}}</mat-label>
+        </td>
+        <!-- <td *ngIf="even">          
+          <mat-label>&nbsp; {{project.day5.comment}}</mat-label>
+        </td> -->
 
         <td>
-          <mat-label>{{project.day5.hour}}</mat-label><br>
-          <!-- <mat-label>&nbsp; {{project.day5.comment}}</mat-label> -->
-        </td>
-        <td>
           <mat-label>{{project.day6.hour}}</mat-label><br>
-          <!-- <mat-label>&nbsp; {{project.day6.comment}}</mat-label> -->
+          <div class="divider"></div>
+          <mat-label>&nbsp; {{project.day6.comment}}</mat-label>
         </td>
+        <!-- <td *ngIf="even">          
+          <mat-label>&nbsp; {{project.day6.comment}}</mat-label>
+        </td> -->
 
         <td>
           <mat-label>{{project.day7.hour}}</mat-label><br>
-          <!-- <mat-label>&nbsp; {{project.day7.comment}}</mat-label>           -->
+          <div class="divider"></div>
+          <mat-label>&nbsp; {{project.day7.comment}}</mat-label>          
         </td>
+        <!-- <td *ngIf="even">          
+          <mat-label>&nbsp; {{project.day7.comment}}</mat-label>
+        </td> -->
 
         <td rowspan="2">
           <span style="margin:15px">{{project.totalHour}}</span>
         </td>
-      </tr>
-      <tr *ngFor="let project of parentTimesheetForm.projects">        
-
-        <td>          
-          <mat-label>&nbsp; {{project.day1.comment}}</mat-label>
-        </td>
-
-        <td>          
-          <mat-label> &nbsp; {{project.day2.comment}}</mat-label>
-        </td>
-        <td>          
-          <mat-label>&nbsp; {{project.day3.comment}}</mat-label>
-        </td>
-
-        <td>          
-          <mat-label>&nbsp;  {{project.day4.comment}}</mat-label>
-        </td>
-
-        <td>
-          <mat-label>&nbsp; {{project.day5.comment}}</mat-label>
-        </td>
-        <td>          
-          <mat-label>&nbsp; {{project.day6.comment}}</mat-label>
-        </td>
-
-        <td>          
-          <mat-label>&nbsp; {{project.day7.comment}}</mat-label>
-        </td>
-        
-      </tr> 
+      </tr>      
     </tbody>
   </table>
 
-  <div class="divider"></div>
+  
 
 
 </div>

@@ -30,6 +30,7 @@ export class ViewTimesheetComponent {
   filterType: any;
   selectedProject: String;
   selectedClient: any;
+  fullListOfProjects: any[];
 
 
   constructor(private firebaseService: FirebaseService, private authService: AuthService) { }
@@ -40,6 +41,7 @@ export class ViewTimesheetComponent {
     this.daysLabel = {};    
     this.getAllUers();
     this.getClients();
+    this.getFullProjectList();
     this.isLoading = true;
     this.listofProjects = [];
     this.authService.userStatusChanges.subscribe(() => {
@@ -65,6 +67,16 @@ export class ViewTimesheetComponent {
     this.getAllProjects(clientId);
     this.getTimesheetByProjectIdAndClientId();
   }
+
+  getFullProjectList(){
+    this.isLoading = true;
+    this.firebaseService
+      .getFirestoreCollection('/projectList')
+      .valueChanges()
+      .subscribe(projectList =>{
+        this.fullListOfProjects = projectList;
+      });      
+  }  
 
   getClients(){
     this.isLoading = true;
@@ -166,7 +178,6 @@ export class ViewTimesheetComponent {
       .subscribe((userData: any[]) => {
         this.isLoading = false;
         if (userData) {
-
           this.listofUser = userData;
         }
 
@@ -174,7 +185,11 @@ export class ViewTimesheetComponent {
   }
 
   getProjectName(projectid) {
-    return (this.listofProjects.filter(obj => obj.projectId === projectid)[0] || {}).title;
+    return (this.fullListOfProjects.filter(obj => obj.projectId === projectid)[0] || {}).title;
+  }
+
+  getClientName(clientId){
+    return (this.listofClient.filter(obj => obj.clientId === clientId)[0] || {}).clientName;
   }
 
   fileName = 'TimeSheetReports.xlsx';
