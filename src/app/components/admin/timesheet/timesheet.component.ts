@@ -49,14 +49,13 @@ export class TimesheetComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    //this.buildForm();
+    
     
   }
 
  
-  resetForm() {
-    //this.addProjectForm.reset();
-    
+  resetForm() {   
+    this.buildForm(this.days,true);    
   }
 
   buildForm(days:  any[], force: boolean): void {   
@@ -153,7 +152,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
         this.isLoading = false;
         if (projectList.length) {
           this.listofProjects = projectList;
-          this.onChangeofWeek();
+          //this.onChangeofWeek();
         }      
       }); 
   }
