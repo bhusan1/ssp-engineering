@@ -12,7 +12,7 @@
 
       
 
-      <table border="1" style="width:100%" *ngIf="selectedWeek && parentTimesheetForm.projects">
+      <table id="excel-table" border="1" style="width:100%" *ngIf="selectedWeek && parentTimesheetForm.projects">
         <thead>
           <tr>
             <th style="width: 12.5%; text-align:center">Client </th>
@@ -152,10 +152,11 @@
       <div class="divider"></div>
 
       <mat-list-item>
+        <button mat-raised-button color="primary" mat-raised-button [disabled]="!selectedWeek || !isAddProjectValid || !parentTimesheetForm.projects" type="save" (click)="onSave()" class="add-project-button">Save</button>
         <button mat-raised-button type="button" id="addNewProject" *ngIf="selectedWeek && isAddProjectValid && parentTimesheetForm.projects" (click)="addNewProject()" >Add new Project</button>
         <button mat-raised-button color="primary" mat-raised-button [disabled]="!selectedWeek || !isAddProjectValid || !parentTimesheetForm.projects" type="submit" (click)="onSubmit()" class="add-project-button">Submit</button>
         <!-- <button mat-raised-button color="primary" mat-raised-button type="submit" [disabled]="addProjectForm.invalid" class="add-project-button">Submit</button> -->
-        <button mat-raised-button type="button" id="resetformButton" (click)="resetForm()">Reset</button>
+        <button mat-raised-button type="button" id="resetformButton" >Reset</button>
       </mat-list-item>
 
       
