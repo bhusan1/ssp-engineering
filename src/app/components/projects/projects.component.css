@@ -20,6 +20,9 @@
   -webkit-transition: all 400ms linear 0s;
   -o-transition: all 400ms linear 0s;
   transition: all 400ms linear 0s;
+  border-left: 1px solid #b8b8b8;
+  border-right: 1px solid #b8b8b8;
+  border-top: 1px solid #b8b8b8;
 }
 
 .our_projects_item .news_image .l_date {
@@ -50,8 +53,8 @@
   border-bottom: 1px solid #b8b8b8;
   overflow: hidden;
   clear: both;
-  padding: 0px 20px 20px 20px;
-  height: 80px;
+  padding: 20px 20px 20px 50px;
+  height: 130px;
 }
 
 .our_projects_item .news_content h4 {

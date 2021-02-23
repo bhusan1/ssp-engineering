@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./all-projects.component.css']
 })
 export class AllProjectsComponent implements OnInit {
-  title = 'All Projects';
+  title = 'Projects';
   noOfItems = 'all';
 
   constructor() {}
