@@ -4,7 +4,7 @@ p {
   
   table {
     overflow: auto;
-    width: 50%;
+    width: 30%;
   }
   
   .example-container {
@@ -13,7 +13,7 @@ p {
     flex-basis: 300px;
   }
   .customWidth{
-    width: 1533px;
+    width: 1860px;
   }
   
   .transparent .mat-dialog-container {

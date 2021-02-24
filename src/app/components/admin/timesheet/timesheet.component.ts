@@ -65,6 +65,10 @@ export class TimesheetComponent implements OnInit, OnChanges {
     }  
   } 
 
+  onSave(): void {
+    this.addDataToFirebase();
+  }
+
   onSubmit(): void {
     this.addDataToFirebase();
   }

@@ -112,19 +112,10 @@ import { ViewTimesheetComponent } from './components/admin/view-timesheet/viewti
         path: 'careers',
         component: CarrersComponent
       },
-      // {
-      //   path: 'newsletters',
-      //   component: NewsletterComponent
-      // },
       {
         path: 'login',
         component: LoginComponent
       },
-
-       /*  {
-        path: 'register',
-        component: RegisterComponent
-      }, */
       
       {
         path: 'admindashboard',

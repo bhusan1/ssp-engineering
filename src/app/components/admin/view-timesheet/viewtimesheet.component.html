@@ -1,9 +1,6 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
 <div class="mat-elevation-z8 customWidth">
   <div>
-
-    <!--  Add Project button
-                View Older timesheet and edit -->
   </div>
   <mat-form-field appearance="fill">
     <mat-label>Select the Week</mat-label>
@@ -69,7 +66,8 @@
           <mat-label>{{getProjectName(project.projectName)}}</mat-label>         
         </td>
 
-        <td  class="boldClass" rowspan="2" *ngIf="selectedUser">
+        <!-- <td  class="boldClass" rowspan="2" *ngIf="selectedUser"> -->
+          <td  class="boldClass" *ngIf="selectedUser">
           <mat-label>{{getClientName(project.clientId)}}</mat-label>
         </td>
         
@@ -138,9 +136,12 @@
           <mat-label>&nbsp; {{project.day7.comment}}</mat-label>
         </td> -->
 
-        <td rowspan="2">
+        <td >
           <span style="margin:15px">{{project.totalHour}}</span>
         </td>
+        <!-- <td rowspan="2">
+          <span style="margin:15px">{{project.totalHour}}</span>
+        </td> -->
       </tr>      
     </tbody>
   </table>
