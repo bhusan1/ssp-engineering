@@ -69,6 +69,11 @@ export class TimesheetComponent implements OnInit, OnChanges {
     this.addDataToFirebase();
   }
 
+
+  removeProject(index){
+    this.parentTimesheetForm.projects.splice(index, 1);
+  }
+
   addDataToFirebase(): void {
     this.isLoading = true;
     const timesheetId = this.parentTimesheetForm.timesheetId

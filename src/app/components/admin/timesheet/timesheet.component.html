@@ -9,21 +9,19 @@
           <mat-option *ngFor="let week of totalWeeks" [value]="week">{{week.startDate}}- {{week.endDate}}</mat-option>
         </mat-select>
       </mat-form-field>
-
-      
-
-      <table border="1" style="width:100%" *ngIf="selectedWeek && parentTimesheetForm.projects">
+      <table border="1" *ngIf="selectedWeek && parentTimesheetForm.projects">
         <thead>
           <tr>
             <th style="width: 12.5%; text-align:center">Client </th>
             <th style="width: 13.5%; text-align:center">Project </th>
             <th style="width: 8%; text-align:center" *ngFor="let day of days">{{day}}</th>        
             <th style="width: 15%; text-align:center">Total Hours</th>
+            <th> Action</th>
           </tr>
         </thead>
 
         <tbody>
-          <tr *ngFor="let project of parentTimesheetForm.projects">
+          <tr *ngFor="let project of parentTimesheetForm.projects; let index = index">
             <td>
               <mat-form-field appearance="fill" style="margin:15px">
                 <mat-label>Select Client</mat-label>
@@ -145,6 +143,9 @@
             <td>
               <span style="margin:15px">{{project.totalHour}}</span>
             </td>
+            <td>
+              <mat-icon aria-hidden="false" aria-label="remove" *ngIf="index!==0" (click)="removeProject(index)">remove</mat-icon>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -152,10 +153,11 @@
       <div class="divider"></div>
 
       <mat-list-item>
-        <button mat-raised-button type="button" id="addNewProject" *ngIf="selectedWeek && isAddProjectValid && parentTimesheetForm.projects" (click)="addNewProject()" >Add new Project</button>
-        <button mat-raised-button color="primary" mat-raised-button [disabled]="!selectedWeek || !isAddProjectValid || !parentTimesheetForm.projects" type="submit" (click)="onSubmit()" class="add-project-button">Submit</button>
+        <button style="margin: 10px;" mat-raised-button type="button" id="addNewProject" *ngIf="selectedWeek && isAddProjectValid && parentTimesheetForm.projects" (click)="addNewProject()" >Add new Project</button>
+        <button style="margin: 10px;" mat-raised-button color="primary" mat-raised-button [disabled]="!selectedWeek || !isAddProjectValid || !parentTimesheetForm.projects" type="submit" (click)="onSubmit()" class="add-project-button">Submit</button>
+        <button style="margin: 10px;" mat-raised-button color="primary" mat-raised-button [disabled]="!selectedWeek" type="submit" (click)="onSubmit()" class="add-project-button">Save</button>
         <!-- <button mat-raised-button color="primary" mat-raised-button type="submit" [disabled]="addProjectForm.invalid" class="add-project-button">Submit</button> -->
-        <button mat-raised-button type="button" id="resetformButton" (click)="resetForm()">Reset</button>
+        <button style="margin: 10px;" mat-raised-button type="button" id="resetformButton" (click)="resetForm()">Reset</button>
       </mat-list-item>
 
       

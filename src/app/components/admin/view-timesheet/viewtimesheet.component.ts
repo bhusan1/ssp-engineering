@@ -159,6 +159,7 @@ export class ViewTimesheetComponent {
       .ref.where('clientId', '==', clientId)
       .onSnapshot((snap) => {
         this.isLoading = false;
+        this.listofProjects = [];
         if(snap.empty){
           this.listofProjects = [];          
           return;
