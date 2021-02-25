@@ -60,21 +60,19 @@
       </tr>
     </thead>
 
-    <tbody>
-      <tr *ngFor="let project of parentTimesheetForm.projects; let even = even; let odd = odd">
-        <td  class="boldClass">
+    <tbody *ngFor="let project of parentTimesheetForm.projects; let even = even; let odd = odd">
+      <tr >
+        <td  class="boldClass" rowspan="2">
           <mat-label>{{getProjectName(project.projectName)}}</mat-label>         
         </td>
 
         <!-- <td  class="boldClass" rowspan="2" *ngIf="selectedUser"> -->
-          <td  class="boldClass" *ngIf="selectedUser">
+          <td  class="boldClass" *ngIf="selectedUser" rowspan="2">
           <mat-label>{{getClientName(project.clientId)}}</mat-label>
         </td>
         
         <td>
-          <mat-label>{{project.day1.hour}}</mat-label><br>
-          <div class="divider"></div>
-          <mat-label>&nbsp; {{project.day1.comment}}</mat-label> 
+          <mat-label>{{project.day1.hour}}</mat-label><br> 
         </td>
         <!-- <td *ngIf="even">          
           <mat-label>&nbsp; {{project.day1.comment}}</mat-label>
@@ -82,8 +80,7 @@
 
         <td >
           <mat-label>{{project.day2.hour}}</mat-label><br>
-          <div class="divider"></div>
-          <mat-label>&nbsp; {{project.day2.comment}}</mat-label>
+          
         </td>
         <!-- <td *ngIf="even">          
           <mat-label>&nbsp; {{project.day2.comment}}</mat-label>
@@ -92,8 +89,7 @@
 
         <td>
           <mat-label>{{project.day3.hour}}</mat-label><br>
-          <div class="divider"></div>
-          <mat-label>&nbsp; {{project.day3.comment}}</mat-label>
+          
         </td>
 
         <!-- <td *ngIf="even">          
@@ -102,8 +98,7 @@
 
         <td>
           <mat-label>{{project.day4.hour}}</mat-label><br>
-          <div class="divider"></div>
-          <mat-label>&nbsp; {{project.day4.comment}}</mat-label>
+          
         </td>
         <!-- <td *ngIf="even">          
           <mat-label>&nbsp; {{project.day4.comment}}</mat-label>
@@ -111,8 +106,7 @@
 
         <td >
           <mat-label>{{project.day5.hour}}</mat-label><br>
-          <div class="divider"></div>
-          <mat-label>&nbsp; {{project.day5.comment}}</mat-label>
+          
         </td>
         <!-- <td *ngIf="even">          
           <mat-label>&nbsp; {{project.day5.comment}}</mat-label>
@@ -120,8 +114,7 @@
 
         <td>
           <mat-label>{{project.day6.hour}}</mat-label><br>
-          <div class="divider"></div>
-          <mat-label>&nbsp; {{project.day6.comment}}</mat-label>
+          
         </td>
         <!-- <td *ngIf="even">          
           <mat-label>&nbsp; {{project.day6.comment}}</mat-label>
@@ -129,20 +122,42 @@
 
         <td>
           <mat-label>{{project.day7.hour}}</mat-label><br>
-          <div class="divider"></div>
-          <mat-label>&nbsp; {{project.day7.comment}}</mat-label>          
+                    
         </td>
         <!-- <td *ngIf="even">          
           <mat-label>&nbsp; {{project.day7.comment}}</mat-label>
         </td> -->
 
-        <td >
+        <td rowspan="2">
           <span style="margin:15px">{{project.totalHour}}</span>
         </td>
         <!-- <td rowspan="2">
           <span style="margin:15px">{{project.totalHour}}</span>
         </td> -->
-      </tr>      
+      </tr> 
+      <tr>
+        <td>
+          <mat-label>&nbsp; {{project.day1.comment}}</mat-label>
+        </td>
+        <td>
+          <mat-label>&nbsp; {{project.day2.comment}}</mat-label>
+        </td>
+        <td>
+          <mat-label>&nbsp; {{project.day3.comment}}</mat-label>
+        </td>
+        <td>
+          <mat-label>&nbsp; {{project.day4.comment}}</mat-label>
+        </td>
+        <td>
+          <mat-label>&nbsp; {{project.day5.comment}}</mat-label>
+        </td>
+        <td>
+          <mat-label>&nbsp; {{project.day6.comment}}</mat-label>
+        </td>
+        <td>
+          <mat-label>&nbsp; {{project.day7.comment}}</mat-label>
+        </td>
+      </tr>     
     </tbody>
   </table>
 
