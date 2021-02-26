@@ -1,6 +1,6 @@
-import { Component, OnInit, OnChanges } from "@angular/core";
+import { Component, OnInit, OnChanges, AfterViewInit } from "@angular/core";
 import { FirebaseService } from "app/services/firebase.service";
-import { MatSnackBar } from "@angular/material";
+import { MatSnackBar, MatTableDataSource } from "@angular/material";
 import * as moment from "moment";
 import { AuthService } from "app/services/auth.service";
 
@@ -11,7 +11,7 @@ import { AuthService } from "app/services/auth.service";
   templateUrl: "./timesheet.component.html",
   providers: [FirebaseService],
 })
-export class TimesheetComponent implements OnInit, OnChanges {
+export class TimesheetComponent implements OnInit, OnChanges, AfterViewInit {
   
   hideResetButton = true;
   totalWeeks: any[];
@@ -24,6 +24,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
   selectedWeek: any;
   selectedClient: any;
   isLoading = false;
+  dataSource: MatTableDataSource<any>;
 
   constructor(
     
@@ -31,6 +32,12 @@ export class TimesheetComponent implements OnInit, OnChanges {
     private snackBar: MatSnackBar,
     private authService: AuthService
   ) {}
+
+
+
+  ngAfterViewInit(): void {
+    this.dataSource = new MatTableDataSource<any>([]);
+  }
 
   ngOnInit() {
     
@@ -62,6 +69,7 @@ export class TimesheetComponent implements OnInit, OnChanges {
     if(force || !(this.parentTimesheetForm.projects && this.parentTimesheetForm.projects.length)){
       this.parentTimesheetForm = {};
       this.parentTimesheetForm.projects = [{day1: {date: days[0]}, day2: {date: days[1]},day3: {date: days[2]},day4: {date: days[3]},day5: {date: days[4]}, day6: {date: days[5]}, day7:{date: days[6]}}];
+      this.dataSource.data = this.parentTimesheetForm.projects;
     }  
   } 
 

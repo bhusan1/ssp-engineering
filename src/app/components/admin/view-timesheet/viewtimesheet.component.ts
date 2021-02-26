@@ -101,11 +101,13 @@ export class ViewTimesheetComponent {
       return;
     }
     this.isLoading = true;
+
     this.firebaseService
       .getFirestoreCollection('/timesheet')
       .ref.where(key || 'projectName', '==', value || "")
       .where('selectedWeek.startDate', '==', this.selectedWeek.startDate)
       .onSnapshot((snap) => {
+        this.parentTimesheetForm.projects = [];
         this.isLoading = false;
         if (snap.empty) {
           delete this.parentTimesheetForm.projects;
@@ -113,9 +115,7 @@ export class ViewTimesheetComponent {
           return;
         }
         snap.forEach(timesheetRef => {
-          console.log("this is document >>", timesheetRef.data());
-          this.parentTimesheetForm = timesheetRef.data();
-
+          this.parentTimesheetForm.projects.push(timesheetRef.data().projeects);
         })
 
 
@@ -123,8 +123,7 @@ export class ViewTimesheetComponent {
   }
 
   getArrayOfDay(startDate) {
-    const currentDate = moment(startDate, "MM-DD-YYYY")
-    //const weekStart = currentDate.clone().startOf('week')
+    const currentDate = moment(startDate, "MM-DD-YYYY")   
 
     var days = [];
     for (let i = 0; i <= 6; i++) {
@@ -226,6 +225,7 @@ export class ViewTimesheetComponent {
       .ref.where('selectedWeek.startDate', '==', this.selectedWeek.startDate)
       .onSnapshot((snap) => {
         this.isLoading = false;
+        this.parentTimesheetForm.projects = [];
         if (snap.empty) {
           delete this.parentTimesheetForm.projects;
           delete this.parentTimesheetForm.timesheetId
@@ -233,18 +233,16 @@ export class ViewTimesheetComponent {
         }
         snap.forEach(timesheetRef => {
           console.log("this is document >>", timesheetRef.data());
-          this.parentTimesheetForm = timesheetRef.data();
-          this._getFilterByclientIdAndProjectId();
-
+          this.parentTimesheetForm.projects = Object.assign(this.parentTimesheetForm.projects, timesheetRef.data().projects);
         })
-
+        this._getFilterByclientIdAndProjectId();
 
       });
   }
 
   _getFilterByclientIdAndProjectId(){
     this.parentTimesheetForm.projects = (this.parentTimesheetForm.projects || []).filter(obj => {
-      if(this.selectedClient && this.selectedProject){
+      if(this.selectedClient && this.selectedProject && (this.selectedProject !== "1")){
         if(obj.clientId == this.selectedClient && obj.projectName == this.selectedProject){
           return true;
         }

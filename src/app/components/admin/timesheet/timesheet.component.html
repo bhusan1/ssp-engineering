@@ -1,5 +1,5 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
-<div class="mat-elevation-z8 customWidth"> 
+<div class="mat-elevation-z8" style="width: fit-content;"> 
     <div>
         <label>Employee Name :  {{currentUser.firstName}}- {{currentUser.lastName}}</label>
     </div>    
@@ -12,18 +12,18 @@
       <table border="1" *ngIf="selectedWeek && parentTimesheetForm.projects">
         <thead>
           <tr>
-            <th style="width: 12.5%; text-align:center">Client </th>
-            <th style="width: 13.5%; text-align:center">Project </th>
-            <th style="width: 8%; text-align:center" *ngFor="let day of days">{{day}}</th>        
+            <th style="width: 8.5%; text-align:center">Client </th>
+            <th style="width: 8.5%; text-align:center">Project </th>
+            <th style="width: 11%; text-align:center" *ngFor="let day of days">{{day}}</th>        
             <th style="width: 15%; text-align:center">Total Hours</th>
-            <th> Action</th>
+            <th style="width: 2%;"> Action</th>
           </tr>
         </thead>
 
         <tbody>
           <tr *ngFor="let project of parentTimesheetForm.projects; let index = index">
             <td>
-              <mat-form-field appearance="fill" style="margin:15px">
+              <mat-form-field appearance="fill" style="width: 100px; margin: 5px;">
                 <mat-label>Select Client</mat-label>
                 <mat-select [(ngModel)]="project.clientId" (selectionChange)="onchangeOfClient(project)" required>
                   <mat-option *ngFor="let client of listofClient" [value]="client.clientId">{{client.clientName}}
@@ -34,7 +34,7 @@
             </td>
             
             <td >
-              <mat-form-field appearance="fill">
+              <mat-form-field appearance="fill" style="width: 100px; margin: 5px;">
                 <mat-label>Select Project</mat-label>
                 <mat-select  [(ngModel)]="project.projectName" required >
                   <mat-option *ngFor="let item of getProjectByClientId(project.clientId)" [value]="item.projectId">{{item.title}}</mat-option>
@@ -43,12 +43,12 @@
             </td>
 
             <td>
-              <mat-form-field class="full-width">
+              <mat-form-field class="full-width" style="width: 100px; margin: 5px;">
                 <input matInput placeholder="Enter Hours:" [(ngModel)]="project.day1.hour" type="number" name="day1hour" value="0" (change)="updateTotal(project)" required>
                
               </mat-form-field>
                 <!--remarks-->
-              <mat-form-field class="full-width">
+              <mat-form-field class="full-width" style="width: 100px; margin: 5px;">
                 <textarea matInput placeholder="Remarks"  type="text" name="day1comment" [(ngModel)]="project.day1.comment" ></textarea>
                 <mat-hint class="alert">
                   <!-- <app-form-validator [control]="addProjectForm.controls.day1.controls"></app-form-validator> -->
@@ -57,12 +57,12 @@
             </td>
 
             <td>
-              <mat-form-field class="full-width">
+              <mat-form-field class="full-width" style="width: 100px; margin: 5px;">
                 <input matInput placeholder="Enter Hours:" [(ngModel)]="project.day2.hour" type="number" name="day2hour" value="0" (change)="updateTotal(project)" required>
                
               </mat-form-field>
                 <!--remarks-->
-              <mat-form-field class="full-width">
+              <mat-form-field class="full-width" style="width: 100px; margin: 5px;">
                 <textarea matInput placeholder="Remarks"  type="text" name="day2comment" [(ngModel)]="project.day2.comment"></textarea>
                 <mat-hint class="alert">
                   <!-- <app-form-validator [control]="addProjectForm.controls.day1.controls"></app-form-validator> -->
@@ -71,12 +71,12 @@
             </td>
 
             <td>
-              <mat-form-field class="full-width">
+              <mat-form-field class="full-width" style="width: 100px; margin: 5px;">
                 <input matInput placeholder="Enter Hours:" [(ngModel)]="project.day3.hour" type="number" name="day3hour" value="0" (change)="updateTotal(project)" required>
                
               </mat-form-field>
                 <!--remarks-->
-              <mat-form-field class="full-width">
+              <mat-form-field class="full-width" style="width: 100px; margin: 5px;">
                 <textarea matInput placeholder="Remarks"  type="text" name="day3comment" [(ngModel)]="project.day3.comment"></textarea>
                 <mat-hint class="alert">
                   <!-- <app-form-validator [control]="addProjectForm.controls.day1.controls"></app-form-validator> -->
@@ -85,12 +85,12 @@
             </td>
 
             <td>
-              <mat-form-field class="full-width">
+              <mat-form-field class="full-width" style="width: 100px; margin: 5px;">
                 <input matInput placeholder="Enter Hours:" [(ngModel)]="project.day4.hour" type="number" name="day4hour" value="0" (change)="updateTotal(project)" required>
                
               </mat-form-field>
                 <!--remarks-->
-              <mat-form-field class="full-width">
+              <mat-form-field class="full-width" style="width: 100px; margin: 5px;">
                 <textarea matInput placeholder="Remarks"  type="text" name="day4comment" [(ngModel)]="project.day4.comment"></textarea>
                 <mat-hint class="alert">
                   <!-- <app-form-validator [control]="addProjectForm.controls.day1.controls"></app-form-validator> -->
@@ -99,12 +99,12 @@
             </td>
 
             <td>
-              <mat-form-field class="full-width">
+              <mat-form-field class="full-width" style="width: 100px; margin: 5px;">
                 <input matInput placeholder="Enter Hours:" [(ngModel)]="project.day5.hour" type="number" name="day5hour" value="0" (change)="updateTotal(project)" required>
                
               </mat-form-field>
                 <!--remarks-->
-              <mat-form-field class="full-width">
+              <mat-form-field class="full-width" style="width: 100px; margin: 5px;">
                 <textarea matInput placeholder="Remarks"  type="text" name="day5comment" [(ngModel)]="project.day5.comment"></textarea>
                 <mat-hint class="alert">
                   <!-- <app-form-validator [control]="addProjectForm.controls.day1.controls"></app-form-validator> -->
@@ -113,12 +113,12 @@
             </td>
 
             <td>
-              <mat-form-field class="full-width">
+              <mat-form-field class="full-width" style="width: 100px; margin: 5px;">
                 <input matInput placeholder="Enter Hours:" [(ngModel)]="project.day6.hour" type="number" name="day6hour" value="0" (change)="updateTotal(project)" required>
                
               </mat-form-field>
                 <!--remarks-->
-              <mat-form-field class="full-width">
+              <mat-form-field class="full-width" style="width: 100px; margin: 5px;">
                 <textarea matInput placeholder="Remarks"  type="text" name="day6comment" [(ngModel)]="project.day6.comment"></textarea>
                 <mat-hint class="alert">
                   <!-- <app-form-validator [control]="addProjectForm.controls.day1.controls"></app-form-validator> -->
@@ -127,12 +127,12 @@
             </td>
 
             <td>
-              <mat-form-field class="full-width">
+              <mat-form-field class="full-width" style="width: 100px; margin: 5px;">
                 <input matInput placeholder="Enter Hours:" [(ngModel)]="project.day7.hour" type="number" name="day7hour" value="0"  (change)="updateTotal(project)" required>
                
               </mat-form-field>
                 <!--remarks-->
-              <mat-form-field class="full-width">
+              <mat-form-field class="full-width" style="width: 100px; margin: 5px;">
                 <textarea matInput placeholder="Remarks"  type="text" name="day7comment" [(ngModel)]="project.day7.comment"></textarea>
                 <mat-hint class="alert">
                   <!-- <app-form-validator [control]="addProjectForm.controls.day1.controls"></app-form-validator> -->

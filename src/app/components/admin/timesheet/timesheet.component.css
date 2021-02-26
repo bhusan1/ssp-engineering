@@ -4,7 +4,7 @@ p {
   
   table {
     overflow: auto;
-    width: 30%;
+    /* width: 30%; */
   }
   
   .example-container {
@@ -13,7 +13,7 @@ p {
     flex-basis: 300px;
   }
   .customWidth{
-    width: 1860px;
+    /* width: 1860px; */
   }
   
   .transparent .mat-dialog-container {
@@ -27,6 +27,12 @@ p {
   align-self: stretch;
   text-align: center
   } */
+
+  .mat-form-field .mat-form-field-infix {
+  
+    width: 100px !important;
+    margin: 5px im !important;
+  }
   
   
   .mat-column-weight{
