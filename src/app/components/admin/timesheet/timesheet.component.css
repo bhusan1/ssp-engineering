@@ -27,10 +27,12 @@ p {
   align-self: stretch;
   text-align: center
   } */
-
-  .mat-form-field .mat-form-field-infix {
+.custom-width-field {
+   width: auto !important; 
+}
+  .mat-form-field-infix {
   
-    width: 100px !important;
+    width: auto !important;
     margin: 5px im !important;
   }
   
@@ -47,7 +49,7 @@ p {
   }
   
   .example-full-width {
-    width: 100%;
+    /* width: 100%; */
   }
 
   .divider{

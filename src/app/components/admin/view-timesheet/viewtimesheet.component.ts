@@ -233,7 +233,8 @@ export class ViewTimesheetComponent {
         }
         snap.forEach(timesheetRef => {
           console.log("this is document >>", timesheetRef.data());
-          this.parentTimesheetForm.projects = Object.assign(this.parentTimesheetForm.projects, timesheetRef.data().projects);
+          this.parentTimesheetForm.selectedWeek = timesheetRef.data().selectedWeek;          
+          this.parentTimesheetForm.projects = (this.parentTimesheetForm.projects || []).concat(timesheetRef.data().projects);
         })
         this._getFilterByclientIdAndProjectId();
 
@@ -253,6 +254,7 @@ export class ViewTimesheetComponent {
       }
       return false;
     })
+    console.log("ttestt >>",this.parentTimesheetForm);
   }
 
 
