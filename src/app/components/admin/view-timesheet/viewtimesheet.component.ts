@@ -115,7 +115,10 @@ export class ViewTimesheetComponent {
           return;
         }
         snap.forEach(timesheetRef => {
-          this.parentTimesheetForm.projects.push(timesheetRef.data().projeects);
+          //this.parentTimesheetForm.projects.push(timesheetRef.data().projeects);
+          console.log("this is document >>", timesheetRef.data());
+          this.parentTimesheetForm.selectedWeek = timesheetRef.data().selectedWeek;          
+          this.parentTimesheetForm.projects = (this.parentTimesheetForm.projects || []).concat(timesheetRef.data().projects);
         })
 
 
