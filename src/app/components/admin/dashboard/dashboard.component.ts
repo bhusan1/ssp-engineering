@@ -10,7 +10,9 @@ import { MediaMatcher } from '@angular/cdk/layout';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   @Output() userAuthStatus = new EventEmitter<any>();
-  currentUser = {};
+
+
+  currentUser: any;
 
   constructor(public authService: AuthService, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');

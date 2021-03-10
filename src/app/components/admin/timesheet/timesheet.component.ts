@@ -20,7 +20,7 @@ export class TimesheetComponent implements OnInit, OnChanges, AfterViewInit {
   listofClient: any[];
   parentTimesheetForm: any;  
   isAddProjectValid = false;
-  currentUser={};
+  currentUser: any;
   selectedWeek: any;
   selectedClient: any;
   isLoading = false;
