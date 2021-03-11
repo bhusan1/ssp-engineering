@@ -9,3 +9,12 @@ export interface User {
   email: string;
   roles: Roles;
 }
+
+export class CurrentUser {
+    firstName: string;
+    lastName: string;
+    isAdmin: boolean;
+    username: string;
+    role: string;
+    email: string;
+}

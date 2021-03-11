@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { AuthService } from 'app/services/auth.service';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { CurrentUser } from 'app/models/user.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,7 +13,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   @Output() userAuthStatus = new EventEmitter<any>();
 
 
-  currentUser: any;
+  currentUser = new CurrentUser();
 
   constructor(public authService: AuthService, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');

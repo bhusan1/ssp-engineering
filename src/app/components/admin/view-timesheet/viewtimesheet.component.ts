@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { CurrentUser } from 'app/models/user.model';
 import { AuthService } from 'app/services/auth.service';
 import { FirebaseService } from 'app/services/firebase.service';
 import * as moment from "moment";
@@ -26,7 +27,7 @@ export class ViewTimesheetComponent {
   selectedWeek: any;
   selectedUser: any;
   isLoading = false;
-  currentUser: any;
+  currentUser = new CurrentUser();
   filterType: any;
   selectedProject: String;
   selectedClient: any;

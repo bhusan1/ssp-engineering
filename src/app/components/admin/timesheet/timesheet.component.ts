@@ -3,6 +3,7 @@ import { FirebaseService } from "app/services/firebase.service";
 import { MatSnackBar, MatTableDataSource } from "@angular/material";
 import * as moment from "moment";
 import { AuthService } from "app/services/auth.service";
+import { CurrentUser } from "app/models/user.model";
 
 
 @Component({
@@ -20,7 +21,7 @@ export class TimesheetComponent implements OnInit, OnChanges, AfterViewInit {
   listofClient: any[];
   parentTimesheetForm: any;  
   isAddProjectValid = false;
-  currentUser: any;
+  currentUser = new CurrentUser();
   selectedWeek: any;
   selectedClient: any;
   isLoading = false;
