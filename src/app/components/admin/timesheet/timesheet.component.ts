@@ -20,7 +20,7 @@ export class TimesheetComponent implements OnInit, OnChanges, AfterViewInit {
   listofProjects:  any[];
   listofClient: any[];
   parentTimesheetForm: any;  
-  isAddProjectValid = false;
+  isAddProjectValid = true;
   currentUser = new CurrentUser();
   selectedWeek: any;
   selectedClient: any;
@@ -261,7 +261,7 @@ export class TimesheetComponent implements OnInit, OnChanges, AfterViewInit {
     if(flag){
       this.isAddProjectValid = true;
     }else{
-      this.isAddProjectValid = false;
+      this.isAddProjectValid = true;
     }
   }
 

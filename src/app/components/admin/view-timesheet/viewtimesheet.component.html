@@ -53,10 +53,10 @@
   <table id="excel-table" border="1" style="width:100%" *ngIf="parentTimesheetForm.selectedWeek">
     <thead>
       <tr>
-        <th style="width: 14%; text-align:center">Project </th>
-        <th style="width: 14%; text-align:center" *ngIf="selectedUser">Client Name </th>
-        <th style="width: 8%; text-align:center" *ngFor="let day of days">{{day}}</th>
-        <th style="width: 15%; text-align:center">Total Hours</th>
+        <th style="width: 14%; text-align:center"><h4 style="color: white;">Project</h4></th>
+        <th style="width: 14%; text-align:center" *ngIf="selectedUser"><h4 style="color: white;">Client Name</h4> </th>
+        <th style="width: 8%; text-align:center" *ngFor="let day of days"><h5 style="color: white;">{{day}}</h5></th>
+        <th style="width: 15%; text-align:center"><h4 style="color: white;">Total Hours</h4></th>
       </tr>
     </thead>
 

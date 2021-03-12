@@ -105,12 +105,16 @@ p {
       margin-right: auto; 
   } 
 
+  thead {
+    background-color: black;
+  }
+
   th {       
-      border: 1px solid black; 
+      border: 1px solid rgb(255, 255, 255); 
   } 
 
   td { 
-      border: 1px solid black; 
+      border: 2px solid black; 
       word-wrap: break-word; 
       text-align: center;
   } 
